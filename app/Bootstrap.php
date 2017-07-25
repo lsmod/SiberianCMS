@@ -26,6 +26,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $loader->registerNamespace('Symfony');
         $loader->registerNamespace('Plesk');
         $loader->registerNamespace('Stripe');
+        $loader->registerNamespace('Woocommerce');
 
         $include_paths = array(get_include_path());
         $include_paths[] = realpath(APPLICATION_PATH."/local/modules");
@@ -208,13 +209,37 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         foreach($module_names as $module) {
             $path = $this->_front_controller->getModuleDirectory($module)."/bootstrap.php";
-            if(is_readable($path)) {
+            $path_init = $this->_front_controller->getModuleDirectory($module)."/init.php";
+
+            # Init is the new flavor 5.0, and has priority over bootstrap.
+            if(is_readable($path_init)) {
+
+                try {
+
+                    ob_start();
+                    require_once $path_init;
+                    if(is_callable($init)) {
+                        $init($this);
+                    }
+                    ob_end_clean();
+
+                } catch(Exception $e) {
+                    # Silently catch & log malformed init module
+                    trigger_error($e->getMessage());
+                }
+
+            } else if(is_readable($path)) {
+
                 try {
 
                     $classname = "{$module}_Bootstrap";
 
                     # Ensure this Class is not duplicated.
+<<<<<<< HEAD
                     if(!class_exists($classname)) {
+=======
+                    if(!class_exists($classname, false)) {
+>>>>>>> upstream/master
                         require_once $path;
 
                         if(class_exists($classname)) {
@@ -223,13 +248,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                                 $bs::init($this);
                             }
                         }
+<<<<<<< HEAD
                     } else {
                         throw new Siberian_Exception("The bootstrap file located at '{$path}' redefines an already existing class '{$classname}', please remove it or rename it.");
+=======
+
+                    } else {
+                        throw new Siberian_Exception("The bootstrap file located at '{$path}' redefines/or is already loaded, Class '{$classname}', please remove it or rename it.");
+>>>>>>> upstream/master
                     }
                 } catch(Exception $e) {
                     # Silently catch & log malformed bootstrap module
                     trigger_error($e->getMessage());
                 }
+
             }
         }
     }
@@ -272,12 +304,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
 
         /** Minify Cache */
-        $minifier = new Siberian_Minify();
-        $minifier->build();
+        if(Installer_Model_Installer::isInstalled()) {
+            $minifier = new Siberian_Minify();
+            $minifier->build();
+        }
+
     }
 
     protected function _initModules() {
-
 
         if(!$this->_request->isInstalling()) {
 
@@ -313,7 +347,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $session_ini = Core_Model_Directory::getBasePathTo("/app/configs/session.ini");
         $config = new Zend_Config_Ini($session_ini, "production");
 
-        Zend_Session::setOptions($config->toArray());
+        $_config = $config->toArray();
+
+        # Awesome hotfix for sessions.
+        if($this->_request->isApplication()) {
+            $_config["name"] = "front";
+        }
+
+        Zend_Session::setOptions($_config);
     }
 
     public function run() {

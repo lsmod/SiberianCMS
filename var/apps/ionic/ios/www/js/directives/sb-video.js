@@ -1,6 +1,12 @@
-"use strict";
+/*global
+    App
+*/
+angular.module("starter").directive("sbVideo", function($timeout, $window, YouTubeAutoPauser) {
 
+<<<<<<< HEAD
 App.directive("sbVideo", function($timeout, $window, $ionicPlatform) {
+=======
+>>>>>>> upstream/master
     return {
         restrict: "A",
         replace:true,
@@ -45,7 +51,13 @@ App.directive("sbVideo", function($timeout, $window, $ionicPlatform) {
                     if(/^https?:\/\/(www.|player.)?(youtube|vimeo)\./.test(scope.video.url)) {
                         scope.use_iframe = true;
                         $timeout(function() {
+<<<<<<< HEAD
                             element.find('iframe').attr('src', scope.video.url_embed + "?autoplay=1&autopause=1");
+=======
+                            var iframe = element.find('iframe');
+                            iframe.attr('src', scope.video.url_embed + "?autoplay=1&autopause=1&enablejsapi=1");
+                            YouTubeAutoPauser.register(iframe);
+>>>>>>> upstream/master
                         });
                     } else {
                         scope.use_video_element = true;

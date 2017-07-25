@@ -2,8 +2,13 @@
 
 namespace Gregwar\Image\Adapter;
 
+<<<<<<< HEAD
 use Gregwar\Image\ImageColor;
 use Gregwar\Image\Image;
+=======
+use Gregwar\Image\Image;
+use Gregwar\Image\ImageColor;
+>>>>>>> upstream/master
 
 class GD extends Common
 {
@@ -20,15 +25,24 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * Gets the width and the height for writing some text
+=======
+     * Gets the width and the height for writing some text.
+>>>>>>> upstream/master
      */
     public static function TTFBox($font, $text, $size, $angle = 0)
     {
         $box = imagettfbbox($size, $angle, $font, $text);
 
         return array(
+<<<<<<< HEAD
             'width' => abs($box[2] - $box[0]),
             'height' => abs($box[3] - $box[5])
+=======
+            'width'  => abs($box[2] - $box[0]),
+            'height' => abs($box[3] - $box[5]),
+>>>>>>> upstream/master
         );
     }
 
@@ -42,7 +56,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function getName()
     {
@@ -50,7 +68,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function fillBackground($background = 0xffffff)
     {
@@ -66,7 +88,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * Do the image resize
+=======
+     * Do the image resize.
+>>>>>>> upstream/master
      *
      * @return $this
      */
@@ -86,7 +112,11 @@ class GD extends Common
             imagesavealpha($n, true);
         }
 
+<<<<<<< HEAD
         imagecopyresampled($n, $this->resource, ($target_width-$new_width)/2, ($target_height-$new_height)/2, 0, 0, $new_width, $new_height, $width, $height);
+=======
+        imagecopyresampled($n, $this->resource, ($target_width - $new_width) / 2, ($target_height - $new_height) / 2, 0, 0, $new_width, $new_height, $width, $height);
+>>>>>>> upstream/master
         imagedestroy($this->resource);
 
         $this->resource = $n;
@@ -95,7 +125,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function crop($x, $y, $width, $height)
     {
@@ -110,98 +144,231 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function negate()
     {
         imagefilter($this->resource, IMG_FILTER_NEGATE);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function brightness($brightness)
     {
         imagefilter($this->resource, IMG_FILTER_BRIGHTNESS, $brightness);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function contrast($contrast)
     {
         imagefilter($this->resource, IMG_FILTER_CONTRAST, $contrast);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function grayscale()
     {
         imagefilter($this->resource, IMG_FILTER_GRAYSCALE);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function emboss()
     {
         imagefilter($this->resource, IMG_FILTER_EMBOSS);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function smooth($p)
     {
         imagefilter($this->resource, IMG_FILTER_SMOOTH, $p);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function sharp()
     {
         imagefilter($this->resource, IMG_FILTER_MEAN_REMOVAL);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function edge()
     {
         imagefilter($this->resource, IMG_FILTER_EDGEDETECT);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function colorize($red, $green, $blue)
     {
         imagefilter($this->resource, IMG_FILTER_COLORIZE, $red, $green, $blue);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function sepia()
     {
         imagefilter($this->resource, IMG_FILTER_GRAYSCALE);
         imagefilter($this->resource, IMG_FILTER_COLORIZE, 100, 50, 0);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+     */
+    public function gaussianBlur($blurFactor = 1)
+    {
+        $blurFactor = round($blurFactor); // blurFactor has to be an integer
+
+        $originalWidth = $this->width();
+        $originalHeight = $this->height();
+
+        $smallestWidth = ceil($originalWidth * pow(0.5, $blurFactor));
+        $smallestHeight = ceil($originalHeight * pow(0.5, $blurFactor));
+
+        // for the first run, the previous image is the original input
+        $prevImage = $this->resource;
+        $prevWidth = $originalWidth;
+        $prevHeight = $originalHeight;
+
+        // scale way down and gradually scale back up, blurring all the way
+        for ($i = 0; $i < $blurFactor; ++$i) {
+            // determine dimensions of next image
+            $nextWidth = $smallestWidth * pow(2, $i);
+            $nextHeight = $smallestHeight * pow(2, $i);
+
+            // resize previous image to next size
+            $nextImage = imagecreatetruecolor($nextWidth, $nextHeight);
+            imagecopyresized($nextImage, $prevImage, 0, 0, 0, 0,
+                $nextWidth, $nextHeight, $prevWidth, $prevHeight);
+
+            // apply blur filter
+            imagefilter($nextImage, IMG_FILTER_GAUSSIAN_BLUR);
+
+            // now the new image becomes the previous image for the next step
+            $prevImage = $nextImage;
+            $prevWidth = $nextWidth;
+            $prevHeight = $nextHeight;
+        }
+
+        // scale back to original size and blur one more time
+        imagecopyresized($this->resource, $nextImage,
+            0, 0, 0, 0, $originalWidth, $originalHeight, $nextWidth, $nextHeight);
+        imagefilter($this->resource, IMG_FILTER_GAUSSIAN_BLUR);
+
+        // clean up
+        imagedestroy($prevImage);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function merge(Image $other, $x = 0, $y = 0, $width = null, $height = null)
     {
@@ -225,7 +392,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function rotate($angle, $background = 0xffffff)
     {
@@ -237,7 +408,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function fill($color = 0xffffff, $x = 0, $y = 0)
     {
@@ -248,7 +423,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function write($font, $text, $x = 0, $y = 0, $size = 12, $angle = 0, $color = 0x000000, $align = 'left')
     {
@@ -272,7 +451,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function rectangle($x1, $y1, $x2, $y2, $color, $filled = false)
     {
@@ -286,14 +469,22 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
      */
     public function roundedRectangle($x1, $y1, $x2, $y2, $radius, $color, $filled = false) {
+=======
+     * {@inheritdoc}
+     */
+    public function roundedRectangle($x1, $y1, $x2, $y2, $radius, $color, $filled = false)
+    {
+>>>>>>> upstream/master
         if ($color) {
             $color = ImageColor::gdAllocate($this->resource, $color);
         }
 
         if ($filled == true) {
+<<<<<<< HEAD
             imagefilledrectangle($this->resource, $x1+$radius, $y1, $x2-$radius, $y2, $color);
             imagefilledrectangle($this->resource, $x1, $y1+$radius, $x1+$radius-1, $y2-$radius, $color);
             imagefilledrectangle($this->resource, $x2-$radius+1, $y1+$radius, $x2, $y2-$radius, $color);
@@ -312,13 +503,37 @@ class GD extends Common
             imagearc($this->resource,$x2-$radius, $y1+$radius, $radius*2, $radius*2, 270 , 360, $color);
             imagearc($this->resource,$x1+$radius, $y2-$radius, $radius*2, $radius*2, 90 , 180, $color);
             imagearc($this->resource,$x2-$radius, $y2-$radius, $radius*2, $radius*2, 360 , 90, $color);
+=======
+            imagefilledrectangle($this->resource, $x1 + $radius, $y1, $x2 - $radius, $y2, $color);
+            imagefilledrectangle($this->resource, $x1, $y1 + $radius, $x1 + $radius - 1, $y2 - $radius, $color);
+            imagefilledrectangle($this->resource, $x2 - $radius + 1, $y1 + $radius, $x2, $y2 - $radius, $color);
+
+            imagefilledarc($this->resource, $x1 + $radius, $y1 + $radius, $radius * 2, $radius * 2, 180, 270, $color, IMG_ARC_PIE);
+            imagefilledarc($this->resource, $x2 - $radius, $y1 + $radius, $radius * 2, $radius * 2, 270, 360, $color, IMG_ARC_PIE);
+            imagefilledarc($this->resource, $x1 + $radius, $y2 - $radius, $radius * 2, $radius * 2, 90, 180, $color, IMG_ARC_PIE);
+            imagefilledarc($this->resource, $x2 - $radius, $y2 - $radius, $radius * 2, $radius * 2, 360, 90, $color, IMG_ARC_PIE);
+        } else {
+            imageline($this->resource, $x1 + $radius, $y1, $x2 - $radius, $y1, $color);
+            imageline($this->resource, $x1 + $radius, $y2, $x2 - $radius, $y2, $color);
+            imageline($this->resource, $x1, $y1 + $radius, $x1, $y2 - $radius, $color);
+            imageline($this->resource, $x2, $y1 + $radius, $x2, $y2 - $radius, $color);
+
+            imagearc($this->resource, $x1 + $radius, $y1 + $radius, $radius * 2, $radius * 2, 180, 270, $color);
+            imagearc($this->resource, $x2 - $radius, $y1 + $radius, $radius * 2, $radius * 2, 270, 360, $color);
+            imagearc($this->resource, $x1 + $radius, $y2 - $radius, $radius * 2, $radius * 2, 90, 180, $color);
+            imagearc($this->resource, $x2 - $radius, $y2 - $radius, $radius * 2, $radius * 2, 360, 90, $color);
+>>>>>>> upstream/master
         }
 
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function line($x1, $y1, $x2, $y2, $color = 0x000000)
     {
@@ -328,7 +543,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function ellipse($cx, $cy, $width, $height, $color = 0x000000, $filled = false)
     {
@@ -342,7 +561,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function circle($cx, $cy, $r, $color = 0x000000, $filled = false)
     {
@@ -350,24 +573,41 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function polygon(array $points, $color, $filled = false)
     {
         if ($filled) {
+<<<<<<< HEAD
             imagefilledpolygon($this->resource, $points, count($points)/2, ImageColor::gdAllocate($this->resource, $color));
         } else {
             imagepolygon($this->resource, $points, count($points)/2, ImageColor::gdAllocate($this->resource, $color));
+=======
+            imagefilledpolygon($this->resource, $points, count($points) / 2, ImageColor::gdAllocate($this->resource, $color));
+        } else {
+            imagepolygon($this->resource, $points, count($points) / 2, ImageColor::gdAllocate($this->resource, $color));
+>>>>>>> upstream/master
         }
 
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      *  @inheritdoc
      */
     public function flip($flipVertical, $flipHorizontal) {
 
+=======
+     *  {@inheritdoc}
+     */
+    public function flip($flipVertical, $flipHorizontal)
+    {
+>>>>>>> upstream/master
         if (!$flipVertical && !$flipHorizontal) {
             return $this;
         }
@@ -375,12 +615,21 @@ class GD extends Common
         if (function_exists('imageflip')) {
             if ($flipVertical && $flipHorizontal) {
                 $flipMode = \IMG_FLIP_BOTH;
+<<<<<<< HEAD
             } else if ($flipVertical && !$flipHorizontal) {
                 $flipMode = \IMG_FLIP_VERTICAL;
             } else if (!$flipVertical && $flipHorizontal) {
                 $flipMode = \IMG_FLIP_HORIZONTAL;
             }
             
+=======
+            } elseif ($flipVertical && !$flipHorizontal) {
+                $flipMode = \IMG_FLIP_VERTICAL;
+            } elseif (!$flipVertical && $flipHorizontal) {
+                $flipMode = \IMG_FLIP_HORIZONTAL;
+            }
+
+>>>>>>> upstream/master
             imageflip($this->resource, $flipMode);
         } else {
             $width = $this->width();
@@ -392,11 +641,16 @@ class GD extends Common
             $src_height = $height;
 
             if ($flipVertical) {
+<<<<<<< HEAD
                 $src_y      = $height -1;
+=======
+                $src_y      = $height - 1;
+>>>>>>> upstream/master
                 $src_height = -$height;
             }
 
             if ($flipHorizontal) {
+<<<<<<< HEAD
                 $src_x      = $width -1;
                 $src_width  = -$width;
             }
@@ -406,16 +660,35 @@ class GD extends Common
             imagesavealpha($imgdest, true);
 
             if (imagecopyresampled($imgdest, $this->resource, 0, 0, $src_x, $src_y , $width, $height, $src_width, $src_height)) {
+=======
+                $src_x      = $width - 1;
+                $src_width  = -$width;
+            }
+
+            $imgdest = imagecreatetruecolor($width, $height);
+            imagealphablending($imgdest, false);
+            imagesavealpha($imgdest, true);
+
+            if (imagecopyresampled($imgdest, $this->resource, 0, 0, $src_x, $src_y, $width, $height, $src_width, $src_height)) {
+>>>>>>> upstream/master
                 imagedestroy($this->resource);
                 $this->resource = $imgdest;
             }
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function width()
     {
@@ -427,7 +700,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function height()
     {
@@ -449,7 +726,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * Converts the image to true color
+=======
+     * Converts the image to true color.
+>>>>>>> upstream/master
      */
     protected function convertToTrueColor()
     {
@@ -473,8 +754,13 @@ class GD extends Common
                     imagealphablending($img, false);
                     imagesavealpha($img, true);
 
+<<<<<<< HEAD
                     for ($x=0; $x<$width; $x++) {
                         for ($y=0; $y<$height; $y++) {
+=======
+                    for ($x = 0; $x < $width; ++$x) {
+                        for ($y = 0; $y < $height; ++$y) {
+>>>>>>> upstream/master
                             if (imagecolorat($this->resource, $x, $y) == $transparentIndex) {
                                 imagesetpixel($img, $x, $y, 127 << 24);
                             }
@@ -490,37 +776,65 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function saveGif($file)
     {
         $transColor = imagecolorallocatealpha($this->resource, 255, 255, 255, 127);
         imagecolortransparent($this->resource, $transColor);
         imagegif($this->resource, $file);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function savePng($file)
     {
         imagepng($this->resource, $file);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
+=======
+     * {@inheritdoc}
+>>>>>>> upstream/master
      */
     public function saveJpeg($file, $quality)
     {
         imagejpeg($this->resource, $file, $quality);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
         return $this;
     }
 
     /**
+<<<<<<< HEAD
      * Try to open the file using jpeg
      *
+=======
+     * Try to open the file using jpeg.
+>>>>>>> upstream/master
      */
     protected function openJpeg($file)
     {
@@ -528,7 +842,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * Try to open the file using gif
+=======
+     * Try to open the file using gif.
+>>>>>>> upstream/master
      */
     protected function openGif($file)
     {
@@ -536,7 +854,11 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * Try to open the file using PNG
+=======
+     * Try to open the file using PNG.
+>>>>>>> upstream/master
      */
     protected function openPng($file)
     {
@@ -548,7 +870,11 @@ class GD extends Common
      */
     protected function supports($type)
     {
+<<<<<<< HEAD
         return (imagetypes() & self::$gdTypes[$type]);
+=======
+        return imagetypes() & self::$gdTypes[$type];
+>>>>>>> upstream/master
     }
 
     protected function getColor($x, $y)
@@ -557,9 +883,16 @@ class GD extends Common
     }
 
     /**
+<<<<<<< HEAD
      * @inheritdoc
      */
     public function enableProgressive(){
+=======
+     * {@inheritdoc}
+     */
+    public function enableProgressive()
+    {
+>>>>>>> upstream/master
         imageinterlace($this->resource, 1);
 
         return $this;

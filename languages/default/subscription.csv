@@ -66,6 +66,7 @@
 "Sorry, but no payment method was found."
 "State/Province"
 "Subscription"
+"Subscription for"
 "Subscription successfully saved"
 "Subtotal"
 "Thanks!"
@@ -94,5 +95,8 @@
 "Zip Code"
 "<a href=""%s"">Click here</a> to go back to your applications list"
 "price"
+<<<<<<< HEAD
 "%s Subscription for %s"
+=======
+>>>>>>> upstream/master
 "to view this app if you are connected to your backoffice."

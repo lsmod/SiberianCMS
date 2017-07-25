@@ -9,6 +9,14 @@
         "php": ">=5.3.3"
     },
 
+<<<<<<< HEAD
+=======
+    "require-dev": {
+        "php-yaoi/php-yaoi": "^1.0",
+        "chuyskywalker/rolling-curl": "^3.1"
+    },
+
+>>>>>>> upstream/master
     "autoload": {
         "psr-0": {
             "Behat\\Transliterator": "src/"
@@ -23,7 +31,11 @@
 
     "extra": {
         "branch-alias": {
+<<<<<<< HEAD
             "dev-master": "1.1-dev"
+=======
+            "dev-master": "1.2-dev"
+>>>>>>> upstream/master
         }
     }
 }

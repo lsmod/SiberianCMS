@@ -34,6 +34,7 @@ class Privacypolicy_Model_Privacypolicy extends Core_Model_Default {
      * @return array
      */
     public function getFeaturePaths($option_value) {
+<<<<<<< HEAD
         if(!$this->isCacheable()) {
             return array();
         }
@@ -56,6 +57,9 @@ class Privacypolicy_Model_Privacypolicy extends Core_Model_Default {
         }
 
         return $paths;
+=======
+        return array();
+>>>>>>> upstream/master
     }
 
     /**

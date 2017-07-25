@@ -3,3 +3,8 @@ demo/out.jpg
 **.swp
 vendor
 composer.lock
+<<<<<<< HEAD
+=======
+/phpunit.xml
+/.php_cs.cache
+>>>>>>> upstream/master

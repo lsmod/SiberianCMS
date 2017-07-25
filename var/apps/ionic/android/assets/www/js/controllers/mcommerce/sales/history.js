@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 App.config(function ($stateProvider) {
 
     $stateProvider.state('mcommerce-sales-history', {
@@ -13,18 +14,32 @@ App.config(function ($stateProvider) {
     });
 
 }).controller('MCommerceSalesHistoryViewController', function ($ionicLoading, $scope, $state, $stateParams, $timeout, $translate, McommerceSalesCustomer) {
+=======
+/*global
+    App, BASE_PATH
+ */
+angular.module("starter").controller("MCommerceSalesHistoryViewController", function (Loader, $scope, $state, $stateParams,
+                                                               $translate, McommerceSalesCustomer) {
+>>>>>>> upstream/master
 
     $scope.value_id = $stateParams.value_id;
 
     $scope.page_title = $translate.instant("Order history");
 
     $scope.showLoader = function() {
+<<<<<<< HEAD
         $ionicLoading.show({
             template: "<ion-spinner class=\"spinner-custom\"></ion-spinner>"
         });
     };
 
     $scope.orders = new Array();
+=======
+        Loader.show();
+    };
+
+    $scope.orders = [];
+>>>>>>> upstream/master
     $scope.offset = 0;
     $scope.can_load_older_posts = true;
 
@@ -34,6 +49,7 @@ App.config(function ($stateProvider) {
 
         $scope.showLoader();
 
+<<<<<<< HEAD
         McommerceSalesCustomer.getOrderHistory($scope.offset).success(function(data) {
 
             $scope.orders = $scope.orders.concat(data.orders);
@@ -47,6 +63,30 @@ App.config(function ($stateProvider) {
             $scope.$broadcast('scroll.infiniteScrollComplete');
             $ionicLoading.hide();
         });
+=======
+        McommerceSalesCustomer.getOrderHistory($scope.offset)
+            .then(function(data) {
+
+                if(data.orders) {
+                    $scope.orders = $scope.orders.concat(data.orders);
+                    $scope.offset += data.orders.length;
+
+                    if(data.orders.length <= 0) {
+                        $scope.can_load_older_posts = false;
+                    }
+                    return true;
+                } else {
+                    $scope.orders = [];
+                    return false;
+                }
+
+            }).then(function(refresh) {
+                if(refresh) {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
+                Loader.hide();
+            });
+>>>>>>> upstream/master
     };
 
     $scope.loadContent();
@@ -56,6 +96,7 @@ App.config(function ($stateProvider) {
     };
 
     $scope.loadMore = function() {
+<<<<<<< HEAD
         console.log("load more");
         $scope.loadContent();
     };
@@ -71,11 +112,25 @@ App.config(function ($stateProvider) {
     $ionicLoading.show({
         template: "<ion-spinner class=\"spinner-custom\"></ion-spinner>"
     });
+=======
+        $scope.loadContent();
+    };
+
+}).controller("MCommerceSalesHistoryDetailsController", function (Loader, $scope, $stateParams,
+                                                                  $translate, McommerceSalesCustomer) {
+
+    $scope.value_id = $stateParams.value_id;
+    $scope.page_title = $translate.instant("Order details");
+    $scope.order_id = $stateParams.order_id;
+
+    Loader.show();
+>>>>>>> upstream/master
 
     McommerceSalesCustomer.value_id = $stateParams.value_id;
 
     $scope.loadContent = function() {
 
+<<<<<<< HEAD
         McommerceSalesCustomer.getOrderDetails($scope.order_id).success(function(data) {
 
             $scope.order = data.order;
@@ -83,6 +138,16 @@ App.config(function ($stateProvider) {
         }).finally(function() {
             $ionicLoading.hide();
         });
+=======
+        McommerceSalesCustomer.getOrderDetails($scope.order_id)
+            .then(function(data) {
+
+                $scope.order = data.order;
+
+            }).then(function() {
+                Loader.hide();
+            });
+>>>>>>> upstream/master
     };
 
     $scope.loadContent();

@@ -1,4 +1,8 @@
 "Allow offline mode"
 "Be aware that if the code you enter here requires any kind of server interaction it will not work properly in offline mode.")
+<<<<<<< HEAD
+=======
+"Insert in-app link"
+>>>>>>> upstream/master
 "Insert your HTML code:"
 "Source Code"

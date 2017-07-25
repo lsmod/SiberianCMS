@@ -1,7 +1,11 @@
 {
   "name": "Application",
   "decription": "",
+<<<<<<< HEAD
   "version": "4.11.1",
+=======
+  "version": "4.12.2",
+>>>>>>> upstream/master
   "dependencies": {
     "system": {
       "type": "SAE",

@@ -7,7 +7,14 @@ class Application_Customization_Design_ColorsController extends Application_Cont
      */
     public $cache_triggers = array(
         "save" => array(
+<<<<<<< HEAD
             "tags" => array("css_app_#APP_ID#"),
+=======
+            "tags" => array(
+                "css_app_#APP_ID#",
+                "app_#APP_ID#"
+            ),
+>>>>>>> upstream/master
         ),
     );
 

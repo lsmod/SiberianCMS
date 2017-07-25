@@ -36,6 +36,7 @@ module.exports = [
         "id": "phonegap-plugin-push.PushNotification",
         "file": "plugins/phonegap-plugin-push/www/push.js",
         "pluginId": "phonegap-plugin-push",
+<<<<<<< HEAD
         "clobbers": [
             "PushNotification"
         ]
@@ -44,16 +45,24 @@ module.exports = [
         "id": "cordova-plugin-app-version.AppVersionPlugin",
         "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
         "pluginId": "cordova-plugin-app-version",
+=======
+>>>>>>> upstream/master
         "clobbers": [
-            "cordova.getAppVersion"
+            "PushNotification"
         ]
     },
     {
+<<<<<<< HEAD
         "id": "com.keosu.cordova.stream.Stream",
         "file": "plugins/com.keosu.cordova.stream/www/Stream.js",
         "pluginId": "com.keosu.cordova.stream",
+=======
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "pluginId": "cordova-plugin-app-version",
+>>>>>>> upstream/master
         "clobbers": [
-            "window.Stream"
+            "cordova.getAppVersion"
         ]
     },
     {
@@ -137,6 +146,7 @@ module.exports = [
         ]
     },
     {
+<<<<<<< HEAD
         "id": "cordova-plugin-dialogs.notification",
         "file": "plugins/cordova-plugin-dialogs/www/notification.js",
         "pluginId": "cordova-plugin-dialogs",
@@ -145,6 +155,8 @@ module.exports = [
         ]
     },
     {
+=======
+>>>>>>> upstream/master
         "id": "cordova-plugin-file.DirectoryEntry",
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "pluginId": "cordova-plugin-file",
@@ -364,6 +376,7 @@ module.exports = [
         "pluginId": "ionic-plugin-keyboard",
         "clobbers": [
             "cordova.plugins.Keyboard"
+<<<<<<< HEAD
         ]
     },
     {
@@ -391,6 +404,11 @@ module.exports = [
         ]
     },
     {
+=======
+        ]
+    },
+    {
+>>>>>>> upstream/master
         "id": "cordova-plugin-x-socialsharing.SocialSharing",
         "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
         "pluginId": "cordova-plugin-x-socialsharing",
@@ -442,19 +460,31 @@ module.exports = [
         ]
     },
     {
+<<<<<<< HEAD
         "id": "cordova-plugin-iosrtc.Plugin",
         "file": "plugins/cordova-plugin-iosrtc/dist/cordova-plugin-iosrtc.js",
         "pluginId": "cordova-plugin-iosrtc",
-        "clobbers": [
-            "cordova.plugins.iosrtc"
-        ]
-    },
-    {
+=======
         "id": "cordova-plugin-insomnia.Insomnia",
         "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
         "pluginId": "cordova-plugin-insomnia",
+>>>>>>> upstream/master
         "clobbers": [
             "window.plugins.insomnia"
+        ]
+    },
+    {
+<<<<<<< HEAD
+        "id": "cordova-plugin-insomnia.Insomnia",
+        "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
+        "pluginId": "cordova-plugin-insomnia",
+=======
+        "id": "cordova-plugin-music-controls.MusicControls",
+        "file": "plugins/cordova-plugin-music-controls/www/MusicControls.js",
+        "pluginId": "cordova-plugin-music-controls",
+>>>>>>> upstream/master
+        "clobbers": [
+            "MusicControls"
         ]
     },
     {
@@ -477,7 +507,6 @@ module.exports.metadata =
     "phonegap-plugin-push": "1.10.0",
     "cordova-plugin-app-version": "0.1.8",
     "cordova-plugin-app-event": "1.2.0",
-    "com.keosu.cordova.stream": "0.1",
     "cordova-plugin-background-fetch": "3.0.4",
     "phonegap-plugin-barcodescanner": "6.0.6",
     "cordova-plugin-compat": "1.1.0",
@@ -485,18 +514,27 @@ module.exports.metadata =
     "com.verso.cordova.clipboard": "0.1.0",
     "cordova-plugin-console": "1.0.7-dev",
     "cordova-plugin-device": "1.1.6-dev",
+<<<<<<< HEAD
     "cordova-plugin-dialogs": "1.3.3-dev",
+=======
+>>>>>>> upstream/master
     "cordova-plugin-file": "4.3.3-dev",
     "cordova-plugin-geolocation": "2.1.0",
     "cordova-plugin-inappbrowser": "1.7.1-dev",
     "ionic-plugin-keyboard": "2.2.1",
+<<<<<<< HEAD
     "cordova-plugin-media": "2.4.1",
     "de.neofonie.cordova.plugin.progressview": "3.0.1",
+=======
+>>>>>>> upstream/master
     "cordova-plugin-x-socialsharing": "5.0.12-dev",
     "cordova-plugin-statusbar": "2.2.0",
     "de.appplant.cordova.plugin.local-notification": "0.8.4.1",
     "siberian-plugin-offlinemode": "1.0.0",
+<<<<<<< HEAD
     "cordova-plugin-iosrtc": "3.1.0",
+=======
+>>>>>>> upstream/master
     "cordova-plugin-insomnia": "4.2.0",
     "cordova-plugin-music-controls": "1.4.1",
     "siberian": "1.0.0"

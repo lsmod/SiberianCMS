@@ -1,16 +1,102 @@
 /*global
+<<<<<<< HEAD
     App, ionic, DOMAIN, _, window, localStorage
+=======
+    App, caches, cacheName, ionic, DOMAIN, _, window, localStorage, IS_NATIVE_APP
+>>>>>>> upstream/master
 */
 
-App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $translate, $window, $queue, $log, Dialog, Url) {
+/**
+ * Application
+ *
+ * @author Xtraball SAS
+ */
+angular.module("starter").service("Application", function ($pwaRequest, $q, $rootScope, $session, $timeout,
+                                                           $window, $queue, $log, Dialog, ProgressbarService) {
 
-    var service = {};
+    /** @todo mcommerce preFetch */
+    var service = {
+        /** @deprecated, should used DEVICE_TYPE with constants */
+        is_webview: !IS_NATIVE_APP,
+        known_modules: {
+            //"booking"                   : "Booking", Removed not used anymore.
+            "calendar"                  : "Event",
+            "catalog"                   : "Catalog",
+            //"code_scan"                 : "null",
+            //"contact"                   : "Contact", Removed not used anymore.
+            "custom_page"               : "Cms",
+            "discount"                  : "Discount",
+            //"facebook"                  : "null",
+            "fanwall"                   : "Newswall",
+            //"folder"                    : "Folder", Removed not used anymore.
+            "form"                      : "Form",
+            //"image_gallery"             : "Image", Removed not used anymore.
+            //"inapp_messages"            : "null",
+            //"loyalty"                   : "LoyaltyCard",Removed not used anymore.
+            //"m_commerce"                : "null",
+            //"magento"                   : "null", weblink_mono, not required
+            //"maps"                      : "null", Removed not used anymore.
+            "music_gallery"             : "MusicPlaylist",
+            "newswall"                  : "Newswall",
+            //"padlock"                   : "null",
+            "places"                    : "Places",
+            //"prestashop"                : "null",  weblink_mono, not required
+            //"privacy_policy"            : "null", already loaded in loadv2
+            "push_notification"         : "Push",
+            "qr_discount"               : "Push",
+            //"radio"                     : "Radio",Removed not used anymore.
+            "rss_feed"                  : "Rss",
+            "set_meal"                  : "SetMeal",
+            //"shopify"                   : "null", weblink_mono, not required
+            "social_gaming"             : "SocialGaming",
+            //"source_code"               : "SourceCode",Removed not used anymore.
+            //"tip"                       : "Tip",Removed not used anymore.
+            //"topic"                     : "Topic",Removed not used anymore.
+            "twitter"                   : "Twitter",
+            "video_gallery"             : "Videos",
+            //"volusion"                  : "null", weblink_mono, not required
+            //"weather"                   : "Weather",Removed not used anymore.
+            //"weblink_mono"              : "null", weblink_mono, not required
+            //"weblink_multi"             : "Links", Removed not used anymore.
+            //"woocommerce"               : "null", weblink_mono, not required
+            "wordpress"                 : "Wordpress"
+        },
+        lazyLoadCodes: {
+            "calendar"          : ["event"],
+            "custom_page"       : ["cms"],
+            "fanwall"           : ["newswall"],
+            "music_gallery"     : ["media"],
+            "places"            : ["cms", "places"],
+            "qr_discount"       : ["discount"],
+            "rss_feed"          : ["rss"],
+            "set_meal"          : ["catalog"],
+            "video_gallery"     : ["video"],
+            "push_notification" : ["push"]
+        }
+    };
 
     service.is_webview = null;
 
     var _loaded = false;
     var _loaded_resolver = $q.defer();
+    var _ready = false;
+    var _ready_resolver = $q.defer();
 
+<<<<<<< HEAD
+=======
+    /**
+     * We are about to pre-load current features.
+     *
+     * @param pages
+     */
+    service.preLoad = function(pages) {
+
+        // Disabled until 5.0 or further update
+        return;
+
+    };
+
+>>>>>>> upstream/master
     Object.defineProperty(service, "loaded", {
         get: function () {
             if (_loaded) {
@@ -28,18 +114,44 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
         }
     });
 
+<<<<<<< HEAD
+=======
+    Object.defineProperty(service, "ready", {
+        get: function () {
+            if (_ready) {
+                $log.info("Application ready, resolving promise");
+                return $q.resolve();
+            }
+            return _ready_resolver.promise;
+        },
+        set: function (value) {
+            _ready = !!value;
+            if (_ready === true) {
+                $log.info("Application ready, resolving promise");
+                _ready_resolver.resolve();
+            }
+        }
+    });
+
+>>>>>>> upstream/master
     service.app_id          = null;
     service.app_name        = null;
     service.googlemaps_key  = null;
 
+<<<<<<< HEAD
+=======
+    /** @todo change this ... */
+>>>>>>> upstream/master
     service.is_customizing_colors = ($window.location.href.indexOf("application/mobile_customization_colors/") >= 0);
 
+    /** @todo change this ... */
     Object.defineProperty(service, "acceptedOfflineMode", {
         get: function () {
             return ($window.localStorage.getItem("sb-offline-mode") === "ok");
         }
     });
 
+<<<<<<< HEAD
     service.showCacheDownloadModalOrUpdate = function () {
 
 
@@ -79,21 +191,92 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
                 }
             });
         }
+=======
+    /**
+     * Populate Application service on load
+     *
+     * @param data
+     */
+    service.populate = function(data) {
+        service.app_id                  = data.application.id;
+        service.app_name                = data.application.name;
+        service.privacy_policy          = data.application.privacy_policy;
+        service.privacy_policy_title    = data.application.privacy_policy_title;
+        service.googlemaps_key          = data.application.googlemaps_key;
+        service.is_locked               = data.application.is_locked;
+        service.offline_content         = data.application.offline_content;
+        service.homepage_background     = data.application.homepage_background;
+
+        /** Small base64 default image, while loading the real deal */
+        service.default_background  = data.homepage_image;
+        service.colors  = data.application.colors;
+
+        service.ready = true;
+    };
+
+    service.showCacheDownloadModalOrUpdate = function () {
+
+        /** Lazy Load progressbar, then dooooo it */
+        ProgressbarService.init()
+            .then(function() {
+
+                $rootScope.progressBarPercent = 0;
+
+                var offlineResponse = $window.localStorage.getItem("sb-offline-mode");
+
+                if(offlineResponse === "ok") {
+                    $log.debug("offline mode has been accepted, updating");
+                    service.updateCache();
+                } else if(offlineResponse === "no") {
+                    $log.debug("offline mode has been refused in the past, not updating");
+                } else {
+                    $log.debug("offline mode need to be asked");
+                    var title = "Offline content";
+                    var message = "Do you want to download all the contents now to access it when offline? If you do, we recommend you to use a WiFi connection.";
+                    var buttons = ["Yes", "No"];
+
+                    Dialog.confirm(title, message, buttons, "text-center").then(function (res) {
+
+                        if (res) {
+
+                            $window.localStorage.setItem("sb-offline-mode", "ok");
+
+                            $rootScope.openLoaderProgress();
+                            ProgressbarService.createCircle(".ui-progress-view-circle");
+
+                            service.updateCache();
+
+                        } else {
+                            $window.localStorage.setItem("sb-offline-mode", "no");
+                        }
+                    });
+                }
+
+            });
+>>>>>>> upstream/master
     };
 
     var _updatingCache = false;
 
     var _replace_tokens = function(url) {
-        return _.isString(url) ? url.replace("%DEVICE_UID%", $rootScope.device_uid).replace("%CUSTOMER_ID%", $rootScope.customer_id) : 0;
+        return _.isString(url) ?
+            url.replace("%DEVICE_UID%", $session.getDeviceUid()).replace("%CUSTOMER_ID%", $rootScope.customer_id) : 0;
     };
 
     service.updateCache = function () {
+<<<<<<< HEAD
         if(window.OfflineMode) window.OfflineMode.setCanCache();
+=======
+        if(window.OfflineMode) {
+            window.OfflineMode.setCanCache();
+        }
+>>>>>>> upstream/master
 
         if (_updatingCache === true) {
             return;
         }
 
+<<<<<<< HEAD
         var device_uid = null;
         if ($window.device) {
             device_uid = $window.device.uuid;
@@ -113,6 +296,22 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
             cache: false,
             timeout: 15000
         }).success(function (data) {
+=======
+        var device_screen = $session.getDeviceScreen();
+
+        $pwaRequest.get("application/mobile_data/findall", {
+            data: {
+                device_uid      : $session.getDeviceUid(),
+                device_width    : device_screen.width,
+                device_height   : device_screen.height
+            },
+            cache: false,
+            timeout: 30000
+        }).then(function (data) {
+
+            $log.debug("application/mobile_data/findall", data);
+
+>>>>>>> upstream/master
             var total = data.paths.length + data.assets.length;
             if (isNaN(total)) {
                 total = 100;
@@ -127,9 +326,9 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
             var fileQueue   = [];
             var retryQueue  = [];
 
-            var delay = 100;
+            var delay = 500;
             var maxRequest = 15;
-            if (!ionic.Platform.isAndroid()) {
+            if (ionic.Platform.isIOS()) {
                 delay = 250;
                 maxRequest = 3;
             }
@@ -167,6 +366,7 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
                     pathQueue.start();
                 }
 
+<<<<<<< HEAD
                 var percent = (progress / total);
 
                 // Change progress only if it's bigger. (don't go back ...)
@@ -176,21 +376,48 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
 
                 if (isNaN($rootScope.progressBarPercent)) {
                     $rootScope.progressBarPercent = 0;
-                }
+=======
+                if($rootScope.isNativeApp) {
 
-                $window.plugins.ProgressView.setProgress($rootScope.progressBarPercent);
+                    var percent = (progress / total);
+
+                    // Change progress only if it's bigger. (don't go back ...)
+                    if(percent.toFixed(2) > $rootScope.progressBarPercent) {
+                        $rootScope.progressBarPercent = percent.toFixed(2);
+                    }
+
+                    if (isNaN($rootScope.progressBarPercent)) {
+                        $rootScope.progressBarPercent = 0;
+                    }
+
+                    ProgressbarService.updateProgress($rootScope.progressBarPercent);
+                    $window.localStorage.setItem("sb-offline-mode-assets", JSON.stringify(assets_done));
+
+                    if ($rootScope.progressBarPercent >= 1) {
+                        _updatingCache = false;
+
+                        $timeout(function () {
+                            ProgressbarService.remove();
+                            $rootScope.closeLoaderProgress();
+                        }, 1000);
+                    }
+>>>>>>> upstream/master
+                }
+            };
+
+            /** Force end */
+            var endProgress = function() {
+                progress = total;
+                $rootScope.progressBarPercent = 1;
+                ProgressbarService.updateProgress($rootScope.progressBarPercent);
                 $window.localStorage.setItem("sb-offline-mode-assets", JSON.stringify(assets_done));
 
-                if ($rootScope.progressBarPercent >= 1) {
-                    _updatingCache = false;
+                _updatingCache = false;
 
-                    $timeout(function () {
-                        if ($rootScope.showProgressBar) {
-                            $rootScope.showProgressBar = false;
-                            $window.plugins.ProgressView.hide();
-                        }
-                    }, 1000);
-                }
+                $timeout(function () {
+                    ProgressbarService.remove();
+                    $rootScope.closeLoaderProgress();
+                }, 1000);
             };
 
             /** Force end */
@@ -238,16 +465,14 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
             var fetchAssets = function (asset) {
                 if (asset.type === "path") {
                     requestCount += 1;
-                    $sbhttp({
-                        method: "GET",
-                        url: asset.path,
+                    $pwaRequest.get(asset.path, {
                         cache: !$rootScope.isOverview
-                    }).success(function (data) {
+                    }).then(function (data) {
                         if(_.isObject(data)) {
                             look_for_images(data);
                         }
                         updateProgress(asset);
-                    }).error(function () {
+                    }, function () {
                         if (retry) {
                             updateFailed(asset);
                         } else {
@@ -256,7 +481,8 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
                     });
                 } else if (asset.type === "asset") {
                     requestCount += 1;
-                    $sbhttp.cache(asset.path).then(function () {
+
+                    $pwaRequest.cacheImage(asset.path).then(function () {
                         updateProgress();
                         assets_done.push(asset.path);
                     }, function () {
@@ -307,7 +533,7 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
             /** Rework objects */
             _.forEach(data.paths, function (path) {
                 fileQueue.push({
-                    type: 'path',
+                    type: "path",
                     path: _replace_tokens(path)
                 });
             });
@@ -316,29 +542,33 @@ App.service('Application', function ($sbhttp, $q, $rootScope, $timeout, $transla
                 var path = _replace_tokens(asset);
                 if (!_.includes(assets_done, path)) {
                     fileQueue.push({
-                        type: 'asset',
+                        type: "asset",
                         path: path
                     });
                 }
             });
 
+            service.fileQueue = fileQueue;
+
             pathQueue = $queue.queue(fetchAssets, options);
             pathQueue.addEach(fileQueue);
-            pathQueue.start();
 
+<<<<<<< HEAD
         }).error(function () {
             _updatingCache = false;
             $rootScope.showProgressBar = false;
             $window.plugins.ProgressView.hide();
         });
     };
+=======
+            service.loaded.then(function() {
+                pathQueue.start();
+            });
+>>>>>>> upstream/master
 
-    service.generateWebappConfig = function () {
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("application/mobile/generatewebappconfig"),
-            cache: false,
-            responseType: 'json'
+
+        }, function () {
+            _updatingCache = false;
         });
     };
 

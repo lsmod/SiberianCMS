@@ -194,7 +194,10 @@
     <key>UIBackgroundModes</key>
     <array>
       <string>remote-notification</string>
+<<<<<<< HEAD
       <string>audio</string>
+=======
+>>>>>>> upstream/master
       <string>fetch</string>
     </array>
     <key>NSCameraUsageDescription</key>

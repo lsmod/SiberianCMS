@@ -573,7 +573,14 @@ abstract class Transliterator
             $text = strtolower($text);
         }
 
+<<<<<<< HEAD
         // Remove all none word characters
+=======
+        // Remove apostrophes which are not used as quotes around a string
+        $text = preg_replace('/(\\w)\'(\\w)/', '${1}${2}', $text);
+
+        // Replace all none word characters with a space
+>>>>>>> upstream/master
         $text = preg_replace('/\W/', ' ', $text);
 
         // More stripping. Replace spaces with dashes

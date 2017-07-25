@@ -42,7 +42,8 @@ class Push_ApplicationController extends Application_Controller_Default
 
                 //Inapp message expiration date
                 if(!empty($data["inapp_datepicker_send_until"])) {
-                    $date = new Zend_Date($data["inapp_datepicker_send_until"], 'y-MM-dd HH:mm:ss');
+                    $date = new Zend_Date($data["inapp_datepicker_send_until"],
+                        'y-MM-dd HH:mm:ss');
                     $date_now = new Zend_Date();
                     $date_now = $date_now->toString('y-MM-dd HH:mm:ss');
                     $data["send_until"] = $date->toString('y-MM-dd HH:mm:ss');
@@ -110,7 +111,14 @@ class Push_ApplicationController extends Application_Controller_Default
                 }
 
 
+<<<<<<< HEAD
                 $message->setData($data)->save();
+=======
+                $message->setData($data);
+                // Use new methods for automatic base64 conversion
+                $message->setTitle($data["title"])->setText($data["text"]);
+                $message->save();
+>>>>>>> upstream/master
 
                 //PnTopics
                 if($data["topic_receiver"]) {
@@ -160,6 +168,11 @@ class Push_ApplicationController extends Application_Controller_Default
                     $siberian_cron = new Siberian_Cron();
                     $siberian_cron->execute($task);
                 }
+
+                /** Update touch date, then never expires (until next touch) */
+                $this->getCurrentOptionValue()
+                    ->touch()
+                    ->expires(-1);
 
                 $html = array(
                     'success' => 1,

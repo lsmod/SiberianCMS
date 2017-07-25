@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 App.config(function($stateProvider, HomepageLayoutProvider) {
 
     $stateProvider.state("folder-category-list", {
@@ -42,13 +43,47 @@ App.config(function($stateProvider, HomepageLayoutProvider) {
     $scope.is_loading = true;
     $scope.value_id = Folder.value_id = $stateParams.value_id;
     $scope.search = {};
+=======
+/*global
+ App, angular, BASE_PATH
+ */
 
-    Folder.category_id = $stateParams.category_id;
+angular.module("starter").controller("FolderListController", function($scope, $stateParams, $ionicNavBarDelegate,
+                                                                      $timeout, SB, Customer, Folder, Padlock) {
 
-    Customer.onStatusChange("folder", [
-        Url.get("folder/mobile_list/findall", {value_id: Folder.value_id, category_id: Folder.category_id})
-    ]);
+    angular.extend($scope, {
+        is_loading      : true,
+        value_id        : $stateParams.value_id,
+        search          : {},
+        card_design     : false
+    });
 
+    Folder.setValueId($stateParams.value_id);
+    Folder.setCategoryId(_.get($stateParams, "category_id", null));
+>>>>>>> upstream/master
+
+    $scope.computeCollections = function() {
+        var unlocked = Customer.can_access_locked_features || Padlock.unlocked_by_qrcode;
+
+        var compute = function(collection) {
+            var destination = [];
+            angular.forEach(collection, function(folder_item) {
+                if(unlocked || !folder_item.is_locked || (folder_item.code === "padlock")) {
+                    if(unlocked && (folder_item.code === "padlock")) {
+                        return;
+                    }
+
+                    this.push(folder_item);
+                }
+            }, destination);
+            return destination;
+        };
+
+        $scope.collection = compute($scope.collection_data);
+        $scope.search_list = compute($scope.search_list_data);
+    };
+
+<<<<<<< HEAD
     function computeCollections() {
         var unlocked = Customer.can_access_locked_features || Padlock.unlocked_by_qrcode;
 
@@ -74,22 +109,56 @@ App.config(function($stateProvider, HomepageLayoutProvider) {
 
     $scope.loadContent = function() {
         Folder.findAll().success(function(data) {
+=======
+    $scope.loadContent = function() {
+        Folder.findAll()
+            .then(function(data) {
 
-            $scope.cover = data.cover;
-            $scope.page_title = data.page_title;
+                var values = angular.copy(data);
 
+                $scope.cover        = values.cover;
+
+                $ionicNavBarDelegate.title(values.page_title);
+                $timeout(function() {
+                    $scope.page_title   = values.page_title;
+                });
+
+                $scope.collection_data      = values.folders;
+                $scope.search_list_data     = values.search_list;
+>>>>>>> upstream/master
+
+                $scope.computeCollections();
+
+<<<<<<< HEAD
             $scope.collection_data = data.folders;
             $scope.search_list_data = data.search_list;
             computeCollections();
 
             $scope.show_search = data.show_search == "1";
+=======
+                $scope.show_search = values.show_search;
+>>>>>>> upstream/master
 
-        }).error(function() {
+                return values;
 
-        }).finally(function() {
-            $scope.is_loading = false;
-        });
+            }).then(function(data) {
+                $scope.is_loading = false;
 
+                /** Pre-load any sub-folder */
+                var sub_folders = _.filter(data.folders, {
+                    is_subfolder: true
+                });
+
+                angular.forEach(sub_folders, function(sub_folder) {
+                    if(_.find(Folder.collection, {category_id: sub_folder.category_id}) === undefined) {
+                        Folder.findAll($scope.value_id, sub_folder.category_id, {
+                            refresh: true
+                        }).then(function(folder) {
+                            Folder.collection.push(folder);
+                        });
+                    }
+
+<<<<<<< HEAD
     };
 
     $scope.goTo = function(feature) {
@@ -113,6 +182,30 @@ App.config(function($stateProvider, HomepageLayoutProvider) {
         Analytics.storePageOpening(feature);
     };
 
+=======
+                });
+
+            });
+
+    };
+
+    $scope.$on(SB.EVENTS.AUTH.loginSuccess, function() {
+        $scope.loadContent();
+    });
+
+    $scope.$on(SB.EVENTS.AUTH.logoutSuccess, function() {
+        $scope.loadContent();
+    });
+
+    $scope.$on(SB.EVENTS.PADLOCK.unlockFeatures, function() {
+        $scope.loadContent();
+    });
+
+    $scope.$on(SB.EVENTS.PADLOCK.lockFeatures, function() {
+        $scope.loadContent();
+    });
+
+>>>>>>> upstream/master
     $scope.loadContent();
 
 });

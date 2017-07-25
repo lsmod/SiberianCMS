@@ -1,5 +1,10 @@
 <?php
+<<<<<<< HEAD
 require_once('../autoload.php');
+=======
+
+require_once '../autoload.php';
+>>>>>>> upstream/master
 
 use Gregwar\Image\Image;
 
@@ -19,7 +24,11 @@ Image::open('mona.jpg')
     ->forceResize(250, 250)
     ->save('forceResize.jpg');
 
+<<<<<<< HEAD
 // cropResize() preserves scale just like resize() but will 
+=======
+// cropResize() preserves scale just like resize() but will
+>>>>>>> upstream/master
 // trim the whitespace (if any) in the resulting image
 Image::open('mona.jpg')
     ->cropResize(250, 250)

@@ -8,10 +8,18 @@
     <access launch-external="yes" origin="tel:*" />
     <access launch-external="yes" origin="geo:*" />
     <access launch-external="yes" origin="mailto:*" />
+<<<<<<< HEAD
+=======
+    <access launch-external="yes" origin="sms:*" />
+>>>>>>> upstream/master
     <allow-navigation href="*" />
     <allow-intent href="tel:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="mailto:*" />
+<<<<<<< HEAD
+=======
+    <allow-intent href="sms:*" />
+>>>>>>> upstream/master
     <chcp>
         <config-file url="PLATFORM_URL" />
         <native-interface version="4" />
@@ -69,9 +77,12 @@
     <feature name="AppVersion">
         <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion" />
     </feature>
+<<<<<<< HEAD
     <feature name="Stream">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
+=======
+>>>>>>> upstream/master
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
@@ -84,9 +95,12 @@
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+<<<<<<< HEAD
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
+=======
+>>>>>>> upstream/master
     <feature name="File">
         <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
@@ -102,12 +116,15 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+<<<<<<< HEAD
     <feature name="Media">
         <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
     </feature>
     <feature name="ProgressView">
         <param name="android-package" value="de.neofonie.cordova.plugin.progressview.ProgressView" />
     </feature>
+=======
+>>>>>>> upstream/master
     <feature name="SocialSharing">
         <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
     </feature>

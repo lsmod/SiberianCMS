@@ -17,20 +17,77 @@ class Cms_Model_Application_Page extends Core_Model_Default
      * Returns Pages sorted by rank
      *
      * @param $value_id
+<<<<<<< HEAD
      * @return collection of pages
      */
     public static function findAllOrderedByRank($value_id) {
         return self::findAllOrderedBy($value_id, 'rank');
+=======
+     * @param $params
+     * @return collection of pages
+     */
+    public static function findAllOrderedByRank($value_id, $params) {
+        return self::findAllOrderedBy($value_id, 'rank', $params);
+>>>>>>> upstream/master
     }
 
     /**
      * Returns Pages sorted by label
      *
      * @param $value_id
+<<<<<<< HEAD
      * @return collection of pages
      */
     public static function findAllOrderedByLabel($value_id) {
         return self::findAllOrderedBy($value_id, 'label');
+=======
+     * @param $params
+     * @return collection of pages
+     */
+    public static function findAllOrderedByLabel($value_id, $params) {
+        return self::findAllOrderedBy($value_id, 'label', $params);
+    }
+
+    /**
+     * @param $option_value
+     * @return bool
+     */
+    public function getEmbedPayload($option_value) {
+
+        switch($option_value->getCode()) {
+            case "places":
+                    $payload = array(
+                        "page_title"    => $option_value->getTabbarName(),
+                        "settings"      => array()
+                    );
+
+                    if($this->getId()) {
+
+                        $payload["settings"] = array(
+                            "tags" => array()
+                        );
+
+                        $metadata = $option_value->getMetadatas();
+                        foreach ($metadata as $meta) {
+                            $payload["settings"][$meta->getCode()] = $meta->getPayload();
+                        }
+
+                        $tags = $option_value->getOwnTags(new Cms_Model_Application_Page());
+                        foreach ($tags as $tag) {
+                            $payload["settings"]["tags"][] = strtolower(trim($tag->getName()));
+                        }
+
+                        $payload["settings"]["tags"] = array_unique($payload["settings"]["tags"]);
+
+                    }
+                break;
+            default:
+                    $payload = false;
+        }
+
+        return $payload;
+
+>>>>>>> upstream/master
     }
 
     /**
@@ -77,6 +134,7 @@ class Cms_Model_Application_Page extends Core_Model_Default
         $value_id = $option_value->getId();
         $cache_id = "feature_paths_valueid_{$value_id}";
         if(!$result = $this->cache->load($cache_id)) {
+<<<<<<< HEAD
 
             if($option_value->getCode() == "custom_page") {
                 $paths = array();
@@ -191,6 +249,122 @@ class Cms_Model_Application_Page extends Core_Model_Default
                         $regex_url = "/((?:http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/[^\s\"]*)\.(?:png|gif|jpeg|jpg)+)+/";
                         preg_match_all($regex_url, $block->getContent(), $matches);
 
+=======
+
+            if($option_value->getCode() == "custom_page") {
+                $paths = array();
+
+                $paths[] = $option_value->getPath(
+                    "find",
+                    array(
+                        'page_id' => $this->getId(),
+                        'value_id' => $option_value->getId()
+                    ),
+                    false
+                );
+
+                $paths[] = $option_value->getPath(
+                    "findall",
+                    array(
+                        'page_id' => $this->getId(),
+                        'value_id' => $option_value->getId()
+                    ),
+                    false
+                );
+
+                $paths[] = $option_value->getPath(
+                    "findall",
+                    array(
+                        'value_id' => $option_value->getId()
+                    ),
+                    false
+                );
+
+                foreach($this->getBlocks() as $block) {
+                    $paths[] = $option_value->getPath(
+                        "findblock",
+                        array(
+                            'block_id' => $block->getId(),
+                            'page_id' => $this->getId(),
+                            'value_id' => $option_value->getId()
+                        ),
+                        false
+                    );
+                    $paths[] = $option_value->getPath(
+                        "findblock",
+                        array(
+                            'block_id' => $block->getId(),
+                            'value_id' => $option_value->getId()
+                        ),
+                        false
+                    );
+                }
+            } else {
+                // Places paths
+                $places = new Places_Model_Place();
+                $paths =  $places->getFeaturePaths($option_value);
+            }
+
+            $this->cache->save($paths, $cache_id, array(
+                "feature_paths",
+                "feature_paths_valueid_{$value_id}"
+            ));
+        } else {
+            $paths = $result;
+        }
+
+        return $paths;
+    }
+
+    /**
+     * @param $option_value
+     * @return array|void
+     */
+    public function getAssetsPaths($option_value) {
+        if(!$this->isCacheable()) {
+            return array();
+        }
+
+        $value_id = $option_value->getId();
+        $cache_id = "assets_paths_valueid_{$value_id}";
+        if(!$result = $this->cache->load($cache_id)) {
+
+            if($option_value->getCode() == "custom_page") {
+                $paths = array();
+
+                $val = $this->getPictureUr();
+                if(!empty($val)) {
+                    $paths[] = $val;
+                }
+
+                foreach($this->getBlocks() as $block) {
+                    $data = $block->_toJson("");
+                    $keys = array("icon", "image_url", "cover_url", "file_url");
+
+                    foreach ($keys as $key) {
+                        $val = $data[$key];
+                        if(!empty($val)) {
+                            $paths[] = $val;
+                        }
+                    }
+
+                    if(is_array($data["gallery"])) {
+                        foreach ($data["gallery"] as $img) {
+                            $paths[] = $img["src"];
+                        }
+                    }
+
+                    if($block->getType() == "video" && $data["video_type_id"] == "link") {
+                        $paths[] = $data["url"];
+                    }
+
+                    if($block->getType() == "text") {
+
+                        $matches = array();
+                        $regex_url = "/((?:http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/[^\s\"]*)\.(?:png|gif|jpeg|jpg)+)+/";
+                        preg_match_all($regex_url, $block->getContent(), $matches);
+
+>>>>>>> upstream/master
                         $matches = call_user_func_array('array_merge', $matches);
 
                         if($matches && count($matches) > 1) {
@@ -222,16 +396,34 @@ class Cms_Model_Application_Page extends Core_Model_Default
      *
      * @param $value_id
      * @param $field
+<<<<<<< HEAD
      * @return collection of pages
      */
     private static function findAllOrderedBy($value_id, $field) {
+=======
+     * @param $params
+     * @return collection of pages
+     */
+    private static function findAllOrderedBy($value_id, $field, $params = null) {
+>>>>>>> upstream/master
         $table = new Cms_Model_Db_Table_Application_Page();
         $select = $table->select(Zend_Db_Table::SELECT_WITH_FROM_PART);
         $select->setIntegrityCheck(false);
-        $select->join('cms_application_page_block', 'cms_application_page_block.page_id = cms_application_page.page_id')
+        $select
+            ->join('cms_application_page_block', 'cms_application_page_block.page_id = cms_application_page.page_id')
             ->join('cms_application_page_block_address', 'cms_application_page_block_address.value_id = cms_application_page_block.value_id')
             ->where("cms_application_page.value_id = ?", $value_id)
             ->order("cms_application_page_block_address." . $field . " asc");
+<<<<<<< HEAD
+=======
+
+        if(is_array($params)) {
+            if(isset($params["limit"]) && isset($params["offset"])) {
+                $select->limit($params["limit"], $params["offset"]);
+            }
+        }
+
+>>>>>>> upstream/master
         return $table->fetchAll($select);
     }
 

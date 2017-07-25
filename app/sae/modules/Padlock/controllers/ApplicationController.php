@@ -9,7 +9,12 @@ class Padlock_ApplicationController extends Application_Controller_Default
     public $cache_triggers = array(
         "editpost" => array(
             "tags" => array(
+<<<<<<< HEAD
                 "app_#APP_ID#"
+=======
+                "app_#APP_ID#",
+                "homepage_app_#APP_ID#"
+>>>>>>> upstream/master
             ),
         )
     );
@@ -87,11 +92,21 @@ class Padlock_ApplicationController extends Application_Controller_Default
                 $allow_everyone = (int) !empty($datas['allow_all_customers_to_access_locked_features']);
                 $application->setData('allow_all_customers_to_access_locked_features', $allow_everyone)->save();
 
-                $padlock->setAppId($application->getId())
+                $padlock
+                    ->setAppId($application->getId())
+                    ->setDescription($datas["description"])
                     ->setValueIds($value_ids)
                     ->save()
                 ;
 
+<<<<<<< HEAD
+=======
+                $this->getCurrentOptionValue()
+                    ->touch()
+                    ->expires(-1);
+
+
+>>>>>>> upstream/master
                 $data = array(
                     "success"           => true,
                     "success_message"   => __("Info successfully saved"),

@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 "use strict";
 
 App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicSlideBoxDelegate, $ionicSideMenuDelegate, $location, $rootScope, $timeout, $translate, $window, $ionicPlatform, Analytics, Application, Customer, Dialog, HomepageLayout, LinkService, Pages, Url, AUTH_EVENTS, PADLOCK_EVENTS, PUSH_EVENTS) {
+=======
+/*global
+ App, angular
+ */
+
+angular.module("starter").directive("sbTabbar", function ($pwaRequest, $ionicHistory, Modal, $ionicSlideBoxDelegate,
+                                    $ionicSideMenuDelegate, $location, $rootScope, $session, $timeout,
+                                    $translate, $window, $ionicPlatform, Analytics, Application,
+                                    Customer, Dialog, HomepageLayout, LinkService, Pages, Url, SB) {
+>>>>>>> upstream/master
     return {
         restrict: 'A',
         templateUrl: function() {
@@ -14,30 +25,66 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
             $scope.animate_tabbar               = !$scope.tabbar_is_visible;
             $scope.pages_list_is_visible        = false;
             $scope.active_page                  = 0;
+<<<<<<< HEAD
+=======
+            $scope.card_design                  = false;
+>>>>>>> upstream/master
 
             $scope.layout = HomepageLayout;
 
             $scope.loadContent = function() {
 
-                HomepageLayout.getOptions().then(function (options) {
-                    $scope.options = options;
-                });
+                HomepageLayout.getOptions()
+                    .then(function (options) {
+                        $scope.options = options;
+                    });
 
-                HomepageLayout.getData().then(function (data) {
-                    $scope.data = data;
-                    $scope.push_badge = data.push_badge;
-                });
+                HomepageLayout.getData()
+                    .then(function (data) {
+                        $scope.data = data;
+                        $scope.push_badge = data.push_badge;
+                    });
 
-                HomepageLayout.getFeatures().then(function (features) {
+                HomepageLayout.getFeatures()
+                    .then(function (features) {
 
-                    // filtered active options
-                    $scope.features = features;
+                        // filtered active options
+                        $scope.features = features;
 
-                    $timeout(function () {
-                        if(!Pages.is_loaded) {
-                            Pages.is_loaded = true;
-                            $scope.tabbar_is_visible = true;
+                        $timeout(function () {
+                            if(!Pages.is_loaded) {
+                                Pages.is_loaded = true;
+                                $scope.tabbar_is_visible = true;
+                            }
+                        }, 500);
+
+                        /** Load first feature is needed */
+                        if($rootScope.loginFeature === true) {
+                            $ionicHistory.goBack();
+                            $rootScope.loginFeature = null;
+
+                        } else if (!Application.is_customizing_colors && HomepageLayout.properties.options.autoSelectFirst && features.first_option !== false) {
+                            var feat_index = 0;
+                            for(var fi = 0; fi < features.options.length; fi++) {
+                                var feat = features.options[fi];
+                                /** Don't load unwanted features on first page. */
+                                if((feat.code !== "code_scan") && (feat.code !== "radio") && (feat.code !== "padlock")) {
+                                    feat_index = fi;
+                                    break;
+                                }
+                            }
+
+                            if(features.options[feat_index].path !== $location.path()) {
+                                $ionicHistory.nextViewOptions({
+                                    historyRoot: true,
+                                    disableAnimate: false
+                                });
+
+                                $location.path(features.options[feat_index].path).replace();
+                            }
+
                         }
+<<<<<<< HEAD
                     }, 500);
 
                     /** Load first feature is needed */
@@ -66,8 +113,10 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
                         }
 
                     }
+=======
+>>>>>>> upstream/master
 
-                });
+                    });
             };
 
             $scope.closeList = function () {
@@ -75,6 +124,7 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
                 $scope.pages_list_is_visible = false;
             };
 
+<<<<<<< HEAD
             $scope.goTo = function(feature) {
 
                 if($scope.moreModal) {
@@ -146,8 +196,10 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
 
             };
 
+=======
+>>>>>>> upstream/master
             $scope.gotoPage = function(index) {
-                $ionicSlideBoxDelegate.$getByHandle('slideBoxLayout').slide(index);
+                $ionicSlideBoxDelegate.$getByHandle("slideBoxLayout").slide(index);
             };
 
             $scope.closePreviewer = function() {
@@ -163,6 +215,7 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
 
             if($rootScope.isOverview) {
                 $scope.$on("tabbarStatesChanged", function() {
+<<<<<<< HEAD
                     if(!HomepageLayout.isInitialized()) {
                         var device_uid = null;
                         if ($window.device) {
@@ -178,14 +231,16 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
                         });
 
                     }
+=======
+                    $scope.loadContent();
+>>>>>>> upstream/master
                 });
             }
 
-            $rootScope.$on(PUSH_EVENTS.unreadPushs, function(event, args) {
-                $timeout(function() {
-                    $scope.push_badge = args;
-                });
+            $rootScope.$on(SB.EVENTS.CACHE.layoutReload, function() {
+                $scope.loadContent();
             });
+<<<<<<< HEAD
 
             $rootScope.$on(PUSH_EVENTS.readPushs, function() {
                 $scope.push_badge = 0;
@@ -217,28 +272,41 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
             });
 
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
+=======
+
+            $rootScope.$on(SB.EVENTS.PUSH.unreadPushs, function(event, args) {
+>>>>>>> upstream/master
                 $timeout(function() {
-                    HomepageLayout.setNeedToBuildTheOptions(true);
-                    $scope.loadContent();
+                    $scope.push_badge = args;
                 });
             });
 
-            $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
-                $timeout(function() {
-                    HomepageLayout.setNeedToBuildTheOptions(true);
-                    $scope.loadContent();
-                });
+            $rootScope.$on(SB.EVENTS.PUSH.readPushs, function() {
+                $scope.push_badge = 0;
             });
 
-            $rootScope.$on(PADLOCK_EVENTS.unlockFeatures, function() {
+            var rebuildOptions = function() {
                 $timeout(function() {
                     HomepageLayout.setNeedToBuildTheOptions(true);
                     $scope.loadContent();
                 });
+            };
+
+            $rootScope.$on(SB.EVENTS.AUTH.logoutSuccess, function() { rebuildOptions(); });
+            $rootScope.$on(SB.EVENTS.AUTH.loginSuccess, function() { rebuildOptions(); });
+            $rootScope.$on(SB.EVENTS.PADLOCK.unlockFeatures, function() { rebuildOptions(); });
+            $rootScope.$on(SB.EVENTS.CACHE.pagesReload, function() { rebuildOptions(); });
+
+            Application.loaded.then(function() {
+                rebuildOptions();
             });
 
             if($rootScope.isOverview) {
+<<<<<<< HEAD
                 $scope.tabbar_is_transparent = ($rootScope.tabbar_is_transparent !== null) ? $rootScope.tabbar_is_transparent : $scope.tabbar_is_transparent;
+=======
+
+>>>>>>> upstream/master
                 $window.changeIcon = function(id, url) {
                     angular.forEach($scope.features.options, function(option) {
                         if(option.id == id) {
@@ -248,33 +316,31 @@ App.directive('sbTabbar', function ($sbhttp, $ionicHistory, $ionicModal, $ionicS
                         }
                     });
                 };
-                $window.toggleTabbarIsTransparent = function(value) {
-                    $timeout(function() {
-                        $rootScope.tabbar_is_transparent = value;
-                        $scope.tabbar_is_transparent = value;
-                    });
-                };
+
             }
 
         }
     };
 });
 
+<<<<<<< HEAD
 App.directive('tabbarItems', function ($rootScope, $timeout, $log) {
+=======
+angular.module("starter").directive("tabbarItems", function ($rootScope, $timeout, $log, HomepageLayout) {
+>>>>>>> upstream/master
     return {
-        restrict: 'A',
+        restrict: "A",
         scope: {
-            option: '=',
-            goToUrl: '&'
+            option: "="
         },
         link: function(scope, element) {
 
             element.on("click", function () {
                 $log.debug("Clicked Option: ", scope.option);
                 $rootScope.$broadcast("OPTION_POSITION", scope.option.position);
-                $rootScope.$broadcast("CLICKED_OPTION", scope.option);
+
                 $timeout(function () {
-                    scope.goToUrl(scope.option);
+                    HomepageLayout.openFeature(scope.option, scope);
                 });
             });
 

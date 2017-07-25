@@ -21,10 +21,13 @@
                         {
                             "xml": "<array><string>audio</string></array>",
                             "count": 1
+<<<<<<< HEAD
                         },
                         {
                             "xml": "<array><string>fetch</string></array>",
                             "count": 1
+=======
+>>>>>>> upstream/master
                         }
                     ],
                     "NSCameraUsageDescription": [
@@ -40,21 +43,31 @@
                         }
                     ],
                     "NSAppTransportSecurity": [
+<<<<<<< HEAD
                         {
                             "xml": "<dict><key>NSAllowsArbitraryLoads</key><true /><key>NSExceptionDomains</key><dict /></dict>",
                             "count": 1
                         }
                     ],
                     "NSLocationWhenInUseUsageDescription": [
+=======
+>>>>>>> upstream/master
                         {
-                            "xml": "<string>Use the GPS for live navigation</string>",
-                            "count": 2
+                            "xml": "<dict><key>NSAllowsArbitraryLoads</key><true /><key>NSExceptionDomains</key><dict /></dict>",
+                            "count": 1
                         }
                     ],
+<<<<<<< HEAD
                     "NSMicrophoneUsageDescription": [
                         {
                             "xml": "<string> </string>",
                             "count": 1
+=======
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string>Use the GPS for live navigation</string>",
+                            "count": 2
+>>>>>>> upstream/master
                         }
                     ],
                     "NSCalendarsUsageDescription": [
@@ -98,14 +111,17 @@
                         },
                         {
                             "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+<<<<<<< HEAD
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"AppVersion\"><param name=\"ios-package\" value=\"AppVersion\" /></feature>",
+=======
+>>>>>>> upstream/master
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Stream\"><param name=\"ios-package\" value=\"CDVStream\" /></feature>",
+                            "xml": "<feature name=\"AppVersion\"><param name=\"ios-package\" value=\"AppVersion\" /></feature>",
                             "count": 1
                         },
                         {
@@ -137,10 +153,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -157,6 +169,7 @@
                             "count": 1
                         },
                         {
+<<<<<<< HEAD
                             "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
                         },
@@ -165,6 +178,8 @@
                             "count": 1
                         },
                         {
+=======
+>>>>>>> upstream/master
                             "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -189,11 +204,31 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"iosrtcPlugin\"><param name=\"ios-package\" value=\"iosrtcPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
+                            "xml": "<feature name=\"MusicControls\"><param name=\"ios-package\" value=\"MusicControls\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Debug.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>development</string>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Release.plist": {
+                "parents": {
+                    "aps-environment": [
+                        {
+                            "xml": "<string>production</string>",
                             "count": 1
                         },
                         {
@@ -237,15 +272,18 @@
         },
         "phonegap-plugin-push": {
             "SENDER_ID": "01234567890",
+<<<<<<< HEAD
+            "PACKAGE_NAME": "com.appsmobilecompany.base"
+        },
+        "cordova-plugin-app-version": {
+=======
+>>>>>>> upstream/master
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
         "cordova-plugin-app-version": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
         "cordova-plugin-app-event": {
-            "PACKAGE_NAME": "com.appsmobilecompany.base"
-        },
-        "com.keosu.cordova.stream": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
         "cordova-plugin-background-fetch": {
@@ -270,9 +308,6 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "com.appsmobilecompany.base"
-        },
         "cordova-plugin-extension": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
@@ -288,6 +323,7 @@
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
+<<<<<<< HEAD
         "cordova-plugin-media": {
             "MICROPHONE_USAGE_DESCRIPTION": " ",
             "PACKAGE_NAME": "com.appsmobilecompany.base"
@@ -295,6 +331,8 @@
         "de.neofonie.cordova.plugin.progressview": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
+=======
+>>>>>>> upstream/master
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
@@ -307,10 +345,13 @@
         "siberian-plugin-offlinemode": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
-        "cordova-plugin-iosrtc": {
+        "cordova-plugin-insomnia": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
-        "cordova-plugin-insomnia": {
+        "cordova-plugin-music-controls": {
+            "PACKAGE_NAME": "com.appsmobilecompany.base"
+        },
+        "siberian": {
             "PACKAGE_NAME": "com.appsmobilecompany.base"
         },
         "cordova-plugin-music-controls": {
@@ -350,6 +391,7 @@
             "id": "phonegap-plugin-push.PushNotification",
             "file": "plugins/phonegap-plugin-push/www/push.js",
             "pluginId": "phonegap-plugin-push",
+<<<<<<< HEAD
             "clobbers": [
                 "PushNotification"
             ]
@@ -358,16 +400,24 @@
             "id": "cordova-plugin-app-version.AppVersionPlugin",
             "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
             "pluginId": "cordova-plugin-app-version",
+=======
+>>>>>>> upstream/master
             "clobbers": [
-                "cordova.getAppVersion"
+                "PushNotification"
             ]
         },
         {
+<<<<<<< HEAD
             "id": "com.keosu.cordova.stream.Stream",
             "file": "plugins/com.keosu.cordova.stream/www/Stream.js",
             "pluginId": "com.keosu.cordova.stream",
+=======
+            "id": "cordova-plugin-app-version.AppVersionPlugin",
+            "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+            "pluginId": "cordova-plugin-app-version",
+>>>>>>> upstream/master
             "clobbers": [
-                "window.Stream"
+                "cordova.getAppVersion"
             ]
         },
         {
@@ -451,6 +501,7 @@
             ]
         },
         {
+<<<<<<< HEAD
             "id": "cordova-plugin-dialogs.notification",
             "file": "plugins/cordova-plugin-dialogs/www/notification.js",
             "pluginId": "cordova-plugin-dialogs",
@@ -459,6 +510,8 @@
             ]
         },
         {
+=======
+>>>>>>> upstream/master
             "id": "cordova-plugin-file.DirectoryEntry",
             "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
             "pluginId": "cordova-plugin-file",
@@ -678,6 +731,7 @@
             "pluginId": "ionic-plugin-keyboard",
             "clobbers": [
                 "cordova.plugins.Keyboard"
+<<<<<<< HEAD
             ]
         },
         {
@@ -705,6 +759,11 @@
             ]
         },
         {
+=======
+            ]
+        },
+        {
+>>>>>>> upstream/master
             "id": "cordova-plugin-x-socialsharing.SocialSharing",
             "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
             "pluginId": "cordova-plugin-x-socialsharing",
@@ -756,19 +815,31 @@
             ]
         },
         {
+<<<<<<< HEAD
             "id": "cordova-plugin-iosrtc.Plugin",
             "file": "plugins/cordova-plugin-iosrtc/dist/cordova-plugin-iosrtc.js",
             "pluginId": "cordova-plugin-iosrtc",
-            "clobbers": [
-                "cordova.plugins.iosrtc"
-            ]
-        },
-        {
+=======
             "id": "cordova-plugin-insomnia.Insomnia",
             "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
             "pluginId": "cordova-plugin-insomnia",
+>>>>>>> upstream/master
             "clobbers": [
                 "window.plugins.insomnia"
+            ]
+        },
+        {
+<<<<<<< HEAD
+            "id": "cordova-plugin-insomnia.Insomnia",
+            "file": "plugins/cordova-plugin-insomnia/www/Insomnia.js",
+            "pluginId": "cordova-plugin-insomnia",
+=======
+            "id": "cordova-plugin-music-controls.MusicControls",
+            "file": "plugins/cordova-plugin-music-controls/www/MusicControls.js",
+            "pluginId": "cordova-plugin-music-controls",
+>>>>>>> upstream/master
+            "clobbers": [
+                "MusicControls"
             ]
         },
         {
@@ -787,7 +858,6 @@
         "phonegap-plugin-push": "1.10.0",
         "cordova-plugin-app-version": "0.1.8",
         "cordova-plugin-app-event": "1.2.0",
-        "com.keosu.cordova.stream": "0.1",
         "cordova-plugin-background-fetch": "3.0.4",
         "phonegap-plugin-barcodescanner": "6.0.6",
         "cordova-plugin-compat": "1.1.0",
@@ -795,19 +865,28 @@
         "com.verso.cordova.clipboard": "0.1.0",
         "cordova-plugin-console": "1.0.7-dev",
         "cordova-plugin-device": "1.1.6-dev",
+<<<<<<< HEAD
         "cordova-plugin-dialogs": "1.3.3-dev",
+=======
+>>>>>>> upstream/master
         "cordova-plugin-extension": "1.3.0",
         "cordova-plugin-file": "4.3.3-dev",
         "cordova-plugin-geolocation": "2.1.0",
         "cordova-plugin-inappbrowser": "1.7.1-dev",
         "ionic-plugin-keyboard": "2.2.1",
+<<<<<<< HEAD
         "cordova-plugin-media": "2.4.1",
         "de.neofonie.cordova.plugin.progressview": "3.0.1",
+=======
+>>>>>>> upstream/master
         "cordova-plugin-x-socialsharing": "5.0.12-dev",
         "cordova-plugin-statusbar": "2.2.0",
         "de.appplant.cordova.plugin.local-notification": "0.8.4.1",
         "siberian-plugin-offlinemode": "1.0.0",
+<<<<<<< HEAD
         "cordova-plugin-iosrtc": "3.1.0",
+=======
+>>>>>>> upstream/master
         "cordova-plugin-insomnia": "4.2.0",
         "cordova-plugin-music-controls": "1.4.1",
         "siberian": "1.0.0"

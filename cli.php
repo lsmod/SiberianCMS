@@ -16,8 +16,13 @@ if(!file_exists("./config.php")) {
 
 require_once "./config.php";
 
+<<<<<<< HEAD
 set_time_limit(120);
 ini_set('max_execution_time', 120);
+=======
+set_time_limit(300);
+ini_set('max_execution_time', 300);
+>>>>>>> upstream/master
 umask(0);
 
 setlocale(LC_MONETARY, 'en_US');
@@ -66,6 +71,10 @@ session_cache_limiter(false);
 
 $application->bootstrap();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 if(isset($argv[1])) {
     switch($argv[1]) {
         case "export-db":

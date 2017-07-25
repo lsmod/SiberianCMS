@@ -32,6 +32,7 @@ abstract class Rss_Model_Feed_Abstract extends Core_Model_Default {
                 $content->loadHTML($entry->getContent());
                 $content->encoding = 'utf-8';
                 $description = $content->documentElement;
+<<<<<<< HEAD
                 $imgs = $description->getElementsByTagName('img');
 
                 foreach($imgs as $k => $img) {
@@ -56,6 +57,44 @@ abstract class Rss_Model_Feed_Abstract extends Core_Model_Default {
                     $img->removeAttribute('width');
                     $img->removeAttribute('height');
 
+=======
+
+                if($picture === null) {
+                  $imgs = $description->getElementsByTagName('img');
+
+                  foreach($imgs as $k => $img) {
+                      $src = $img->getAttribute('src');
+
+                      if($src) {
+                          if(stripos($src, "//") === 0) {
+                              preg_match("/^(https?):\/\//", $this->getLink(), $matches);
+
+                              if($matches && $matches[1]) {
+                                  $src = ($matches[1]).":".$src;
+                                  $img->setAttribute("src", $src);
+                              }
+                          }
+
+                          $width = $img->getAttribute("width");
+                          $height = $img->getAttribute("height");
+
+                          if(stripos($src, ".gif") === false && $k === 0) {
+                              if(
+                                  (($width || $height) && // check if size exists
+                                  ($width > 5 && $height > 5)) || // and is minimum 5x5
+                                  ($width == null && $height == null) // if we have no size at all, consider it ok
+                              ) {
+                                  $picture = $src;
+                                  $img->parentNode->removeChild($img);
+                              }
+                          }
+                      }
+
+                      $img->removeAttribute('width');
+                      $img->removeAttribute('height');
+
+                  }
+>>>>>>> upstream/master
                 }
 
                 $as = $description->getElementsByTagName('a');

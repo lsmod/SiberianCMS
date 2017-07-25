@@ -46,7 +46,11 @@ class Push_Backoffice_GlobalController extends Backoffice_Controller_Default
                 }
 
                 $push_global = new Push_Model_Message_Global();
+<<<<<<< HEAD
                 $result = $push_global->createInstance($params);
+=======
+                $result = $push_global->createInstance($params, true);
+>>>>>>> upstream/master
 
                 $data = array(
                     "success" => true,

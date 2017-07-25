@@ -7,6 +7,13 @@
                 <label for="{{ configs.platform_name.code }}">{{ configs.platform_name.label }}</label>
                 <input type="text" id="{{ configs.platform_name.code }}" ng-model="configs.platform_name.value" class="form-control" placeholder="{{ configs.platform_name.label }}" />
             </div>
+            <div class="col-md-6">
+                <label for="{{ configs.facebook_import_active.code }}">{{ configs.facebook_import_active.label }}</label>
+                <select id="{{ configs.facebook_import_active.code }}" class="form-control" ng-model="configs.facebook_import_active.value">
+                    <option value="1"><?php echo __("Active"); ?></option>
+                    <option value="0"><?php echo __("Inactive"); ?></option>
+                </select>
+            </div>
         </div>
 
     </sb-section>
@@ -197,6 +204,7 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 <div class="form-group">
                     <div class="col-md-12">
                         <label for="{{ configs.application_ios_owner_admob_interstitial_id.code }}"><?php echo __("Admob Interstitial ID"); ?></label>
@@ -206,6 +214,17 @@
 
                 <div class="form-group">
                     <div class="col-md-12">
+=======
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="{{ configs.application_ios_owner_admob_interstitial_id.code }}"><?php echo __("Admob Interstitial ID"); ?></label>
+                        <input type="text" id="{{ configs.application_ios_owner_admob_interstitial_id.value }}" ng-model="configs.application_ios_owner_admob_interstitial_id.value" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+>>>>>>> upstream/master
                         <label for="{{ configs.application_ios_owner_admob_type.code }}"><?php echo __("Admob type"); ?></label>
                         <select id="{{ configs.application_ios_owner_admob_type.code }}" class="form-control" ng-model="configs.application_ios_owner_admob_type.value">
                             <option value="banner"><?php echo __("Banner") ?></option>

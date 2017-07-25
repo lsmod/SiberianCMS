@@ -14,15 +14,30 @@ $schemas['push_message_global'] = array(
         'primary' => true,
     ),
     'title' => array(
+<<<<<<< HEAD
         'type' => 'varchar(30)',
+=======
+        'type' => 'text',
+>>>>>>> upstream/master
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
     ),
     'message' => array(
+<<<<<<< HEAD
         'type' => 'varchar(255)',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
     ),
+=======
+        'type' => 'text',
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+    ),
+    'base64' => array(
+        'type' => 'tinyint(1)',
+        'default' => '0'
+    ),
+>>>>>>> upstream/master
     'send_to_all' => array(
         'type' => 'tinyint(1)',
         'default' => '0',

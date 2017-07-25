@@ -1,24 +1,55 @@
 <?php
+<<<<<<< HEAD
 $xoxo = 1;
 $invoices = array();
 
+=======
+>>>>>>> upstream/master
 $applications = $this->getAdmin()->getPublishedApplicationsForAdmin();
 
 $push_form = new Push_Form_Global();
 ?>
 
+<<<<<<< HEAD
 <div class="page-content-wrapper content solo-page">
     <h3 class="title-editor border-blue"><?php echo __("Global push notifications"); ?></h3>
     <div class="subcontent content-color container-fluid">
         <div class="row">
             <div class="col-md-6">
+=======
+
+
+<div class="page-content-wrapper content solo-page">
+    <h3 class="title-editor border-blue text-center"><?php echo __("Global push notifications"); ?></h3>
+    <div class="subcontent content-color container-fluid">
+        <div class="row">
+
+            <?php if(count($applications) <= 0): ?>
+                <div id="sb-tour-global-push-1" class="col-lg-6 sb-tour">
+                    <h4 class="center"><?php echo __("Push notification"); ?></h4>
+                    <div class="subcontent content-color">
+                        <div class="alert alert-info">
+                            <?php echo __("At least one <b>published</b> application is required in order to use global push notifications.") ?>
+                        </div>
+                    </div>
+                </div>
+
+            <?php else: ?>
+            <div id="sb-tour-global-push-1" class="col-lg-6 sb-tour">
+>>>>>>> upstream/master
                 <h4 class="center"><?php echo __("Push notification"); ?></h4>
                 <div id="push-form-bind" class="subcontent content-color">
                     <?php echo $push_form; ?>
                 </div>
             </div>
+<<<<<<< HEAD
 
             <div class="col-md-6">
+=======
+            <?php endif; ?>
+
+            <div id="sb-tour-global-push-select-app" class="col-lg-6 sb-tour">
+>>>>>>> upstream/master
                 <h4 class="center"><?php echo __("Select target applications"); ?></h4>
                 <span><?php echo __("Only published application are available for global push notifications.") ?></span>
                 <div class="subcontent content-color">
@@ -41,20 +72,46 @@ $push_form = new Push_Form_Global();
                                         <div class="color-blue control__indicator"></div>
                                     </div>
                                 </td>
+<<<<<<< HEAD
                                 <td><?php echo $application->getId(); ?></td>
                                 <td><?php echo $application->getName(); ?></td>
                                 <td><?php echo $application->getBundleId(); ?></td>
+=======
+                                <td style="word-break: break-word;"><?php echo $application->getId(); ?></td>
+                                <td style="word-break: break-word;"><?php echo $application->getName(); ?></td>
+                                <td style="word-break: break-word;"><?php echo $application->getBundleId(); ?></td>
+>>>>>>> upstream/master
                                 <td><?php echo $application->getPackageName(); ?></td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
+<<<<<<< HEAD
                     </table>
                 </div>
             </div>
+=======
+
+                        <?php if(count($applications) <= 0): ?>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5"><?php echo __("No published applications available.") ?></td>
+                            </tr>
+                        </tfoot>
+                        <?php endif; ?>
+                    </table>
+                </div>
+            </div>
+
+
+>>>>>>> upstream/master
         </div>
     </div>
 </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 <style type="text/css">
     div.fix-pos {
         margin: 0 !important;

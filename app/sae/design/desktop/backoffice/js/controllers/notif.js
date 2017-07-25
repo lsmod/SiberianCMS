@@ -71,6 +71,20 @@ App.config(function($routeProvider) {
 
     $scope.openSettings = function() {
         $scope.content_loader_is_visible = true;
+<<<<<<< HEAD
+=======
+        Backoffice.clearCache("generator").success(function (data) {
+            $scope.message.setText(data.message)
+                .isError(false)
+                .show()
+            ;
+            $scope.content_loader_is_visible = false;
+        });
+    };
+
+    $scope.openSettings = function() {
+        $scope.content_loader_is_visible = true;
+>>>>>>> upstream/master
         $location.path("/backoffice/advanced_configuration");
     };
 

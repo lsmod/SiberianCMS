@@ -80,6 +80,9 @@ App.config(function($routeProvider) {
     $scope.content_loader_is_visible = true;
     $scope.hostname = "";
     $scope.show_upload = false;
+    $scope.report = {
+        message: ""
+    };
 
     AdvancedConfiguration.loadData().success(function(data) {
         $scope.header.title = data.title;
@@ -121,6 +124,22 @@ App.config(function($routeProvider) {
 
     $scope.all_messages = null;
 
+<<<<<<< HEAD
+=======
+    $scope.submitReport = function() {
+
+        AdvancedConfiguration.submitReport($scope.report.message)
+            .success(function() {
+                $scope.report.message = "";
+                $window.alert("Thanks for your report.");
+            })
+            .error(function() {
+                $window.alert("An error occurred while submit your report, please try again.");
+            });
+
+    };
+
+>>>>>>> upstream/master
     $scope.testSsl = function() {
         $scope.content_loader_is_visible = true;
 

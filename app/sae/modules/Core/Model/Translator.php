@@ -171,6 +171,11 @@ class Core_Model_Translator
 
     }
 
+    /**
+     * @todo To cache
+     *
+     * @return array
+     */
     protected static function _getIonicTranslations() {
 
         $translation_cache = Siberian_Cache_Translation::getCache();
@@ -188,7 +193,11 @@ class Core_Model_Translator
             }
         }
 
+<<<<<<< HEAD
 	      $flipped_keys = array_flip($keys);
+=======
+        $flipped_keys = array_flip($keys);
+>>>>>>> upstream/master
 
         $current_language = Core_Model_Language::getCurrentLanguage();
         $translation_files_path = Core_Model_Directory::getBasePathTo("languages/{$current_language}");

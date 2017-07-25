@@ -44,6 +44,10 @@ App.service("LinkService", function ($ionicPlatform, $rootScope, $translate, $wi
                         inAppBrowserOptions.push('location=no');
                         inAppBrowserOptions.push('toolbar=no');
                     } else { //else use standard inAppBrowse with navbar
+<<<<<<< HEAD
+=======
+                        inAppBrowserOptions.push('location=no');
+>>>>>>> upstream/master
                         inAppBrowserOptions.push('closebuttoncaption='+$translate.instant("Done"));
                         inAppBrowserOptions.push('transitionstyle=crossdissolve');
                         inAppBrowserOptions.push('toolbar=yes');

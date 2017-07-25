@@ -1,65 +1,88 @@
-App.config(function($stateProvider) {
+/*global
+ App, angular, BASE_PATH
+ */
 
-    $stateProvider.state("push-list", {
-        url: BASE_PATH + "/push/mobile_list/index/value_id/:value_id",
-        controller: 'PushController',
-        templateUrl: 'templates/html/l1/list.html',
-        cache: false
+/**
+ * PushController
+ *
+ * @author Xtraball SAS
+ */
+
+angular.module('starter').controller('PushController', function ($location, $rootScope, $scope, $stateParams,
+                                                                 LinkService, SB, Push) {
+    angular.extend($scope, {
+        is_loading          : true,
+        value_id            : $stateParams.value_id,
+        collection          : [],
+        toggle_text         : false,
+        card_design         : false,
+        load_more           : false,
+        use_pull_refresh    : true
     });
 
-}).controller('PushController', function($location, $rootScope, $scope, $stateParams, $window, PUSH_EVENTS, Push) {
+    Push.setValueId($stateParams.value_id);
 
-    $scope.$on("connectionStateChange", function(event, args) {
-        if(args.isOnline == true) {
-            $scope.loadContent();
-        }
-    });
+    $scope.loadContent = function (loadMore) {
+        var offset = $scope.collection.length;
 
-    $scope.is_loading = true;
-    $scope.value_id = Push.value_id = $stateParams.value_id;
-    $scope.toggle_text = false;
+        Push.findAll(offset)
+            .then(function (data) {
+                if (data.collection) {
+                    $scope.collection = $scope.collection.concat(data.collection);
+                    $rootScope.$broadcast(SB.EVENTS.PUSH.readPush);
+                }
 
-    $scope.device_uid = Push.device_uid;
-    if(!Push.device_uid) {
-        try {
-            $scope.device_uid = Push.device_uid = device.uuid;
-        } catch (e) {
-            $scope.device_uid = null;
-        }
-    }
+                $scope.page_title = data.page_title;
 
-    $scope.collection = new Array();
+                $scope.load_more = (data.collection.length >= data.displayed_per_page);
+            }).then(function () {
+                if (loadMore) {
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }
 
-    $scope.loadContent = function() {
-
-        Push.findAll().success(function(data) {
-            if(data.collection.length) {
-                $scope.collection = data.collection;
-                $rootScope.$broadcast(PUSH_EVENTS.readPushs);
-                //Application.call("markPushAsRead");
-            } else {
-                $scope.collection_is_empty = true;
-            }
-            $scope.page_title = data.page_title;
-        }).finally(function() {
-            $scope.is_loading = false;
-        });
+                $scope.is_loading = false;
+            });
     };
 
-    $scope.showItem = function(item) {
-        if($rootScope.isOffline) {
-            return $rootScope.onlineOnly();
-        }
+    $scope.pullToRefresh = function () {
+        $scope.pull_to_refresh = true;
+        $scope.load_more = false;
 
-        if(item.url) {
-            $window.open(item.url, $rootScope.getTargetForLink(), "location=no");
-        }else if(item.action_value) {
+        Push.findAll(0, true)
+            .then(function (data) {
+                if (data.collection) {
+                    $scope.collection = data.collection;
+                    $rootScope.$broadcast(SB.EVENTS.PUSH.readPush);
+                }
+
+                $scope.load_more = (data.collection.length >= data.displayed_per_page);
+            }).then(function () {
+                $scope.$broadcast('scroll.refreshComplete');
+                $scope.pull_to_refresh = false;
+            });
+    };
+
+    /**
+     * Toggle item or open link/feature
+     * @param item
+     */
+    $scope.showItem = function (item) {
+        if (item.url) {
+            if ($rootScope.isNotAvailableOffline()) {
+                return;
+            }
+
+            LinkService.openLink(item.url);
+        } else if (item.action_value) {
             $location.path(item.action_value);
-        }else{
+        } else {
             $scope.toggle_text = !$scope.toggle_text;
         }
     };
 
-    $scope.loadContent();
+    $scope.loadMore = function () {
+        $scope.loadContent(true);
+    };
 
+    $scope.loadContent();
 });

@@ -242,6 +242,14 @@ $schemas['application'] = array(
         'type' => 'tinyint(4)',
         'is_null' => true,
     ),
+    'homepage_slider_opacity' => array(
+        'type' => 'tinyint(4)',
+        'default' => 100,
+    ),
+    'homepage_slider_offset' => array(
+        'type' => 'tinyint(4)',
+        'default' => 0,
+    ),
     'homepage_slider_duration' => array(
         'type' => 'int(11)',
         'is_null' => true,
@@ -302,6 +310,12 @@ $schemas['application'] = array(
         'collation' => 'utf8_unicode_ci',
     ),
     'facebook_token' => array(
+        'type' => 'varchar(255)',
+        'is_null' => true,
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+    ),
+    'facebook_linked_page' => array(
         'type' => 'varchar(255)',
         'is_null' => true,
         'charset' => 'utf8',
@@ -419,6 +433,12 @@ $schemas['application'] = array(
     ),
     'privacy_policy' => array(
         'type' => 'text',
+        'is_null' => true,
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+    ),
+    'privacy_policy_title' => array(
+        'type' => 'varchar(255)',
         'is_null' => true,
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',

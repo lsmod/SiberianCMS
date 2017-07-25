@@ -8,5 +8,9 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'Gregwar\\Image' => array($vendorDir . '/gregwar/image'),
     'Gregwar\\Cache' => array($vendorDir . '/gregwar/cache'),
+<<<<<<< HEAD
+=======
+    'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
+>>>>>>> upstream/master
     'Behat\\Transliterator' => array($vendorDir . '/behat/transliterator/src'),
 );

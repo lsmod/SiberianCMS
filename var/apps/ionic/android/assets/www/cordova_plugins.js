@@ -36,6 +36,17 @@ module.exports = [
         "id": "phonegap-plugin-push.PushNotification",
         "file": "plugins/phonegap-plugin-push/www/push.js",
         "pluginId": "phonegap-plugin-push",
+<<<<<<< HEAD
+        "clobbers": [
+            "PushNotification"
+        ]
+    },
+    {
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "pluginId": "cordova-plugin-app-version",
+=======
+>>>>>>> upstream/master
         "clobbers": [
             "PushNotification"
         ]
@@ -46,14 +57,6 @@ module.exports = [
         "pluginId": "cordova-plugin-app-version",
         "clobbers": [
             "cordova.getAppVersion"
-        ]
-    },
-    {
-        "id": "com.keosu.cordova.stream.Stream",
-        "file": "plugins/com.keosu.cordova.stream/www/Stream.js",
-        "pluginId": "com.keosu.cordova.stream",
-        "clobbers": [
-            "window.Stream"
         ]
     },
     {
@@ -110,22 +113,6 @@ module.exports = [
         "pluginId": "cordova-plugin-device",
         "clobbers": [
             "device"
-        ]
-    },
-    {
-        "id": "cordova-plugin-dialogs.notification",
-        "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
-        "merges": [
-            "navigator.notification"
-        ]
-    },
-    {
-        "id": "cordova-plugin-dialogs.notification_android",
-        "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
-        "pluginId": "cordova-plugin-dialogs",
-        "merges": [
-            "navigator.notification"
         ]
     },
     {
@@ -333,6 +320,7 @@ module.exports = [
         ]
     },
     {
+<<<<<<< HEAD
         "id": "cordova-plugin-media.MediaError",
         "file": "plugins/cordova-plugin-media/www/MediaError.js",
         "pluginId": "cordova-plugin-media",
@@ -357,6 +345,8 @@ module.exports = [
         ]
     },
     {
+=======
+>>>>>>> upstream/master
         "id": "cordova-plugin-x-socialsharing.SocialSharing",
         "file": "plugins/cordova-plugin-x-socialsharing/www/SocialSharing.js",
         "pluginId": "cordova-plugin-x-socialsharing",
@@ -440,19 +430,24 @@ module.exports.metadata =
     "siberian-plugin-backgroundgeoloc": "1.0.0",
     "phonegap-plugin-push": "1.10.0",
     "cordova-plugin-app-version": "0.1.8",
-    "com.keosu.cordova.stream": "0.1",
     "cordova-plugin-compat": "1.1.0",
     "phonegap-plugin-barcodescanner": "6.0.6",
     "cordova-plugin-camera": "2.3.1-dev",
     "com.verso.cordova.clipboard": "0.1.0",
     "cordova-plugin-device": "1.1.6-dev",
+<<<<<<< HEAD
     "cordova-plugin-dialogs": "1.3.3-dev",
+=======
+>>>>>>> upstream/master
     "cordova-plugin-file": "4.3.3-dev",
     "cordova-plugin-geolocation": "2.1.0",
     "cordova-plugin-inappbrowser": "1.7.1-dev",
     "ionic-plugin-keyboard": "2.2.1",
+<<<<<<< HEAD
     "cordova-plugin-media": "2.4.1",
     "de.neofonie.cordova.plugin.progressview": "3.0.1",
+=======
+>>>>>>> upstream/master
     "cordova-plugin-x-socialsharing": "5.0.12-dev",
     "cordova-plugin-statusbar": "2.2.0",
     "cordova-plugin-whitelist": "1.2.1",

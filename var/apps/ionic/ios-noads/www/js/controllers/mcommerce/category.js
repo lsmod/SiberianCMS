@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 App.config(function($stateProvider) {
 
     $stateProvider.state('mcommerce-category-list', {
@@ -17,20 +18,20 @@ App.config(function($stateProvider) {
     });
 
 }).controller('MCommerceListController', function($ionicLoading, $location, $scope, $state, $stateParams, McommerceCategory, Customer) {
+=======
+/*global
+ App, BASE_PATH
+ */
+>>>>>>> upstream/master
 
-    $scope.$on("connectionStateChange", function(event, args) {
-        if(args.isOnline == true) {
-            $scope.loadContent();
-        }
-    });
+angular.module("starter").controller("MCommerceListController", function(Loader, $location, $scope, $state, $stateParams, McommerceCategory,
+                                                  Customer) {
 
     $scope.is_loading = true;
-    $ionicLoading.show({
-        template: "<ion-spinner class=\"spinner-custom\"></ion-spinner>"
-    });
+    Loader.show();
 
     $scope.factory = McommerceCategory;
-    $scope.collection = new Array();
+    $scope.collection = [];
     $scope.collection_is_empty = true;
 
     McommerceCategory.value_id = $stateParams.value_id;
@@ -44,32 +45,41 @@ App.config(function($stateProvider) {
 
     $scope.loadContent = function() {
 
-        McommerceCategory.findAll().success(function(data) {
+        McommerceCategory.findAll()
+            .then(function(data) {
 
-            $scope.show_search = data.show_search;
-            $scope.collection = data.collection;
-            $scope.collection_is_empty = $scope.collection.length > 0;
+                $scope.show_search = data.show_search;
+                $scope.collection = data.collection;
+                $scope.collection_is_empty = $scope.collection.length > 0;
 
-            $scope.cover = data.cover;
-            $scope.page_title = data.page_title;
+                $scope.cover = data.cover;
+                $scope.page_title = data.page_title;
 
-        }).finally(function() {
-            $scope.is_loading = false;
-            $ionicLoading.hide();
-        });
+            }).then(function() {
+                $scope.is_loading = false;
+                Loader.hide();
+            });
     };
 
     $scope.openCart = function () {
 
         if(!$scope.is_loading) {
-            $state.go("mcommerce-cart-view", {value_id: $scope.value_id});
+            $state.go("mcommerce-cart-view", {
+                value_id: $scope.value_id
+            });
         }
     };
 
     $scope.openHistory = function () {
 
         if(!$scope.is_loading) {
+<<<<<<< HEAD
             $state.go("mcommerce-sales-history", {value_id: $scope.value_id});
+=======
+            $state.go("mcommerce-sales-history", {
+                value_id: $scope.value_id
+            });
+>>>>>>> upstream/master
         }
     };
 
@@ -86,18 +96,21 @@ App.config(function($stateProvider) {
 
     $scope.loadContent();
 
-}).controller('MCommerceRedirectController', function($ionicHistory, $scope, $state, $stateParams, HomepageLayout) {
+}).controller("MCommerceRedirectController", function($ionicHistory, $scope, $state, $stateParams, HomepageLayout) {
+
     $scope.value_id = $stateParams.value_id;
     $scope.layout = HomepageLayout;
 
-    $state.go('home').then(function() {
+    $state.go("home").then(function() {
         if($scope.layout.properties.options.autoSelectFirst) {
             $ionicHistory.nextViewOptions({
                 historyRoot: true,
                 disableAnimate: false
             });
         }
-        $state.go('mcommerce-category-list', {value_id: $scope.value_id});
+        $state.go('mcommerce-category-list', {
+            value_id: $scope.value_id
+        });
     });
 
 });

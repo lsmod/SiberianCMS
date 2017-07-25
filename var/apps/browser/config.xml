@@ -17,10 +17,18 @@
     <access launch-external="yes" origin="tel:*" />
     <access launch-external="yes" origin="geo:*" />
     <access launch-external="yes" origin="mailto:*" />
+    <access launch-external="yes" origin="sms:*" />
     <allow-navigation href="*" />
     <allow-intent href="tel:*" />
     <allow-intent href="geo:*" />
     <allow-intent href="mailto:*" />
+    <allow-intent href="sms:*" />
+    <chcp>
+        <config-file url="PLATFORM_URL" />
+        <native-interface version="4" />
+        <auto-download enabled="false" />
+        <auto-install enabled="false" />
+    </chcp>
     <preference name="webviewbounce" value="false" />
     <preference name="UIWebViewBounce" value="false" />
     <preference name="DisallowOverscroll" value="true" />
@@ -31,10 +39,13 @@
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="FadeSplashScreen" value="true" />
     <preference name="FadeSplashScreenDuration" value="500" />
+<<<<<<< HEAD
     <chcp>
         <config-file url="PLATFORM_URL" />
         <native-interface version="2" />
         <auto-download enabled="false" />
         <auto-install enabled="false" />
     </chcp>
+=======
+>>>>>>> upstream/master
 </widget>

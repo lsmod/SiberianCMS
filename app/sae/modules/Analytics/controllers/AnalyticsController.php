@@ -656,31 +656,32 @@ class Analytics_AnalyticsController extends Application_Controller_Default {
     }
 
     public function getdlloyaltyAction() {
-
         if ($data = $this->getRequest()->getParams()) {
 
             try {
 
-                $where = $this->_getWhereForMetrics($data);
-                $sqlite_request = Analytics_Model_Analytics::getInstance();
-                $loyalties = $sqlite_request->getLoyaltyUsersApp($where);
+                $start_date = date("Y-m-d h:m:s", $data["start"]);
+                $end_date = date("Y-m-d h:m:s", $data["end"]);
 
-                $users = new Customer_Model_Customer();
-                $users = $users->findAll(array("app_id = ?" => $data["app_ids"]));
-
-                $users_names_mails = array();
-                foreach ($users as $user) {
-                    $users_names_mails[$user->getId()] = array(
-                        "mail" => $user->getEmail(),
-                        "name" => $user->getFirstname()." ".$user->getLastname()
-                    );
+                $loyalties = new LoyaltyCard_Model_Customer_Log();
+                $lines = $loyalties->getDlAnalytics($data["card_id"], $start_date, $end_date);
+                $csv_string = "Customer Name;Customer Email;Employee name;Number of points;Date;Reward\n";
+                foreach($lines as $loyalty) {
+                    $csv_string .= $loyalty->getCustomerName() . ";" . $loyalty->getEmail() . ";" . $loyalty->getEmployeeName() . ";" . $loyalty->getNumberOfPoints() . ";" . $loyalty->getCreatedAt() . ";No\n";
                 }
 
+<<<<<<< HEAD
                 $csv_string = "Name;Email;Validation;\n";
                 foreach($loyalties as $loyalty) {
                     if($users_names_mails[$loyalty["customer_id"]]) {
                         $csv_string .= $users_names_mails[$loyalty["customer_id"]]["name"] . ";" . $users_names_mails[$loyalty["customer_id"]]["mail"] . ";" . $loyalty["validation"] . "\n";
                     }
+=======
+                //Add rewards
+                $lines = $loyalties->getDlRewards($data["card_id"], $start_date, $end_date);
+                foreach($lines as $loyalty) {
+                    $csv_string .= $loyalty->getCustomerName() . ";" . $loyalty->getEmail() . ";" . $loyalty->getEmployeeName() . ";" . $loyalty->getNumberOfPoints() . ";" . $loyalty->getUsedAt() . ";".$loyalty->getAdvantage()."\n";
+>>>>>>> upstream/master
                 }
                 $filename = "analytic_validations_by_users_".date("Ymd").".csv";
                 header('Content-Type: application/csv');
@@ -699,7 +700,6 @@ class Analytics_AnalyticsController extends Application_Controller_Default {
 
     private function _getWhereForMetrics($data) {
         $where = array();
-
         if($ids = $data["app_ids"]) {
             if(is_array(Zend_Json::decode($ids))) {
                 $where["appId IN (?)"] = implode(",", Zend_Json::decode($ids));

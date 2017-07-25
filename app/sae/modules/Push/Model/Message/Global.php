@@ -12,7 +12,11 @@ class Push_Model_Message_Global extends Core_Model_Default {
      *
      * @param $params
      */
+<<<<<<< HEAD
     public function createInstance($params) {
+=======
+    public function createInstance($params, $backoffice = false) {
+>>>>>>> upstream/master
 
         $this->setTitle($params["title"]);
         $this->setMessage($params["message"]);
@@ -28,7 +32,11 @@ class Push_Model_Message_Global extends Core_Model_Default {
             $application_table = new Application_Model_Db_Table_Application();
             $all_applications = $application_table->findAllForGlobalPush();
 
+<<<<<<< HEAD
             # Get apps that belong to the current admin
+=======
+            // Get apps that belong to the current admin!
+>>>>>>> upstream/master
             $all_for_admin = $application_table->findAllByAdmin(
                 $this->getSession()->getAdminId()
             )->toArray();
@@ -37,8 +45,17 @@ class Push_Model_Message_Global extends Core_Model_Default {
                 return $app["app_id"];
             }, $all_for_admin);
 
+<<<<<<< HEAD
             # We keep only apps that belongs to the admin
             $applications = array_intersect($all_applications, $filtered);
+=======
+            // We keep only apps that belongs to the admin!
+            if(!$backoffice) {
+                $applications = array_intersect($all_applications, $filtered);
+            } else {
+                $applications = $all_applications;
+            }
+>>>>>>> upstream/master
         }
 
         try {
@@ -82,4 +99,34 @@ class Push_Model_Message_Global extends Core_Model_Default {
         }
 
     }
+<<<<<<< HEAD
+=======
+
+    public function getTitle() {
+        return !!$this->getData("base64") ? base64_decode($this->getData("title")) : $this->getData("title");
+    }
+
+    public function getMessage() {
+      return !!$this->getData("base64") ? base64_decode($this->getData("message")) : $this->getData('message');
+    }
+
+    public function setTitle($title) {
+        $text = $this->getText();
+        return $this->addData(array(
+            "base64" => 1,
+            "title" => base64_encode($title),
+            "message" => base64_encode($text)
+        ));
+    }
+
+    public function setMessage($text) {
+        $title = $this->getTitle();
+        return $this->addData(array(
+            "base64" => 1,
+            "title" => base64_encode($title),
+            "message" => base64_encode($text)
+        ));
+    }
+
+>>>>>>> upstream/master
 }

@@ -10,36 +10,60 @@ class Folder_ApplicationController extends Application_Controller_Default
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "addfeature" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "orderfeatures" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "ordercategories" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "deletecategory" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "setshowsearch" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
                 "assets_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
+=======
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
     );
@@ -110,6 +134,11 @@ class Folder_ApplicationController extends Application_Controller_Default
                 } else {
                     $parent_id = $data['parent_id'];
                 }
+
+                /** Update touch date, then never expires (until next touch) */
+                $option_value
+                    ->touch()
+                    ->expires(-1);
 
                 $html = array(
                     'success' => '1',

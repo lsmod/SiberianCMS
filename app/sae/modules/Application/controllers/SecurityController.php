@@ -18,6 +18,7 @@ class Application_SecurityController extends Core_Controller_Default_Abstract {
         $is_ajax = $this->getRequest()->isXmlHttpRequest();
         $old_tab = $app_id != $this->getSession()->getApplication()->getAppId();
 
+<<<<<<< HEAD
         if ($is_editor && $is_ajax && $app_id && $old_tab) {
             $this->getResponse()->clearBody();
             $this->getResponse()->clearHeaders();
@@ -33,5 +34,18 @@ class Application_SecurityController extends Core_Controller_Default_Abstract {
         }
 
         exit;
+=======
+        if (false /**$is_editor && $is_ajax && $app_id && $old_tab*/) {
+            $this->_sendJson(array(
+                "error" => true,
+                "refresh" => true
+            ));
+        } else {
+            $this->_sendJson(array(
+                "succes" => true,
+                "refresh" => false
+            ));
+        }
+>>>>>>> upstream/master
     }
 }

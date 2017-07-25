@@ -12,6 +12,10 @@ class Customer_Mobile_Account_RegisterController extends Application_Controller_
 
             try {
 
+                if(empty($data["firstname"]) OR empty($data["lastname"])) {
+                    throw new Exception(__("You must fill firstname and lastname fields."));
+                }
+
                 if(empty($data["privacy_policy"])) {
                     throw new Exception(__("You must agree to our privacy policy to create an account."));
                 }
@@ -83,7 +87,8 @@ class Customer_Mobile_Account_RegisterController extends Application_Controller_
                     'success' => 1,
                     'customer_id' => $customer->getId(),
                     'can_access_locked_features' => $customer->canAccessLockedFeatures(),
-                    'token' => Zend_Session::getId()
+                    'token' => Zend_Session::getId(),
+                    "customer" => Customer_Model_Customer::getCurrent()
                 );
 
             }

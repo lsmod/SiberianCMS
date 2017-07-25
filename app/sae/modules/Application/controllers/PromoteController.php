@@ -7,10 +7,15 @@ class Application_PromoteController extends Application_Controller_Default {
     }
 
     public function qrcodeAction() {
+        $client = new Zend_Http_Client();
+        $url = $this->getApplication()->getQrcode(null, array('size' => '512x512', 'without_template' => 1));
+        $client->setUri($url);
+        $client->setAdapter('Zend_Http_Client_Adapter_Curl');
+        $response = $client->request();
+        $qr_code = $response->getRawBody();
 
-        $qrcode = file_get_contents($this->getApplication()->getQrcode(null, array('size' => '512x512', 'without_template' => 1)));
-        if($qrcode) {
-            $this->_download($qrcode, 'qrcode.png', 'image/png');
+        if(!empty($qr_code)) {
+            $this->_download($qr_code, 'qrcode.png', 'image/png');
         }
         else {
             $this->getSession()->addError(__('An error occurred during the generation of your QRCode. Please try again later.'));

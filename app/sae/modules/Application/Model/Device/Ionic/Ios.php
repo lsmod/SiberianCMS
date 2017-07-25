@@ -87,10 +87,14 @@ class Application_Model_Device_Ionic_Ios extends Application_Model_Device_Ionic_
     public function getBrandName() {
         return "Apple";
     }
-    
+
     public function prepareResources($cron = false) {
 
+<<<<<<< HEAD
         self::$_application = $this->getApplication();
+=======
+        self::$_application = $this->_application = $this->getApplication();
+>>>>>>> upstream/master
 
         $this->_package_name = self::$_application->getBundleId();
         $this->_application_id = Core_Model_Lib_String::format(self::$_application->getName()."_".self::$_application->getId(), true);
@@ -163,6 +167,8 @@ class Application_Model_Device_Ionic_Ios extends Application_Model_Device_Ionic_
         $url_js_content = "
 /** Auto-generated url.js */
 var REDIRECT_URI = false;
+var IS_NATIVE_APP = true;
+var DEVICE_TYPE = 2;
 window.location.hash = window.location.hash.replace(/\?__goto__=(.*)/, \"\");
 var CURRENT_LANGUAGE = AVAILABLE_LANGUAGES.indexOf(language) >= 0 ? language : 'en';
 DOMAIN = '{$protocol}{$domain}';
@@ -175,11 +181,11 @@ var IMAGE_URL = DOMAIN + '/';";
         file_put_contents($this->_dest_source."/www/js/utils/url.js", $url_js_content);
 
         /** Embed CSS */
-        $app_id = $this->getApplication()->getId();
-        $base_css = Core_Model_Directory::getBasePathTo("var/cache/css/{$app_id}.css");
-        if(is_readable($base_css)) {
-            file_put_contents($this->_dest_source."/assets/www/css/app.css", file_get_contents($base_css));
-        }
+        //$app_id = $this->getApplication()->getId();
+        //$base_css = Core_Model_Directory::getBasePathTo("var/cache/css/{$app_id}.css");
+        //if(is_readable($base_css)) {
+        //    file_put_contents($this->_dest_source."/assets/www/css/app.css", file_get_contents($base_css));
+        //}
 
     }
 

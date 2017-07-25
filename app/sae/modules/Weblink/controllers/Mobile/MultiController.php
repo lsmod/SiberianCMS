@@ -13,6 +13,7 @@ class Weblink_Mobile_MultiController extends Application_Controller_Mobile_Defau
     public function findAction() {
 
         $option = $this->getCurrentOptionValue();
+<<<<<<< HEAD
         $weblink = $option->getObject();
         $data = array();
 
@@ -35,6 +36,10 @@ class Weblink_Mobile_MultiController extends Application_Controller_Mobile_Defau
         $data['page_title'] = $option->getTabbarName();
 
         $this->_sendHtml($data);
+=======
+        $payload = $option->getObject()->getEmbedPayload($option);
+        $this->_sendJson($payload);
+>>>>>>> upstream/master
 
     }
 

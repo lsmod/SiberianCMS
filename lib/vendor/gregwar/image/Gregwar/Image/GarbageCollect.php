@@ -4,18 +4,30 @@ namespace Gregwar\Image;
 
 /**
  * Garbage collect a directory, this will crawl a directory, lookng
+<<<<<<< HEAD
  * for files older than X days and destroy them
+=======
+ * for files older than X days and destroy them.
+>>>>>>> upstream/master
  *
  * @author Gregwar <g.passault@gmail.com>
  */
 class GarbageCollect
 {
     /**
+<<<<<<< HEAD
      * Drops old files of a directory
      *
      * @param string $directory the name of the target directory
      * @param int $days the number of days to consider a file old
      * @param bool $verbose enable verbose output
+=======
+     * Drops old files of a directory.
+     *
+     * @param string $directory the name of the target directory
+     * @param int    $days      the number of days to consider a file old
+     * @param bool   $verbose   enable verbose output
+>>>>>>> upstream/master
      *
      * @return true if all the files/directories of a directory was wiped
      */
@@ -41,7 +53,11 @@ class GarbageCollect
 
             $fullName = $directory.'/'.$file;
 
+<<<<<<< HEAD
             $old = $now-filemtime($fullName);
+=======
+            $old = $now - filemtime($fullName);
+>>>>>>> upstream/master
 
             if (is_dir($fullName)) {
                 // Directories are recursively crawled
@@ -51,7 +67,11 @@ class GarbageCollect
                     $allDropped = false;
                 }
             } else {
+<<<<<<< HEAD
                 if ($old > (24*60*60*$days)) {
+=======
+                if ($old > (24 * 60 * 60 * $days)) {
+>>>>>>> upstream/master
                     self::drop($fullName, $verbose);
                 } else {
                     $allDropped = false;
@@ -65,7 +85,11 @@ class GarbageCollect
     }
 
     /**
+<<<<<<< HEAD
      * Drops a file or an empty directory
+=======
+     * Drops a file or an empty directory.
+>>>>>>> upstream/master
      */
     public static function drop($file, $verbose = false)
     {
@@ -79,5 +103,8 @@ class GarbageCollect
             echo "> Dropping $file...\n";
         }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 }

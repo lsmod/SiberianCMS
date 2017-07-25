@@ -1,18 +1,24 @@
 /*global
+<<<<<<< HEAD
     App, REDIRECT_URI, BASE_PATH, IMAGE_URL, APP_KEY, console
  */
 App.config(function ($stateProvider, $urlRouterProvider) {
+=======
+ angular, REDIRECT_URI, BASE_PATH, IMAGE_URL, APP_KEY, console
+ */
+>>>>>>> upstream/master
 
-    $stateProvider.state('home', {
-        url: BASE_PATH,
-        templateUrl: 'templates/home/view.html',
-        controller: 'HomeController'
-    });
+angular.module("starter").controller("HomeController", function($ionicNavBarDelegate, $ionicHistory, $injector,
+                                                                $location, $rootScope, $scope, $state, $timeout,
+                                                                $window, Application, Padlock) {
 
+<<<<<<< HEAD
     $urlRouterProvider.otherwise(BASE_PATH);
 
 }).controller('HomeController', function($ionicHistory, $injector, $location, $rootScope, $scope, $state, $timeout, $window, Application, Padlock) {
 
+=======
+>>>>>>> upstream/master
     var HomepageLayout = $injector.get("HomepageLayout");
 
     $ionicHistory.clearHistory();
@@ -43,8 +49,15 @@ App.config(function ($stateProvider, $urlRouterProvider) {
                 loop_at_beginning:      features.data.homepage_slider_loop_at_beginning,
                 new_slider:             features.data.homepage_slider_is_new,
                 height:                 features.data.homepage_slider_size,
+<<<<<<< HEAD
+=======
+                offset:                 features.data.homepage_slider_offset,
+                opacity:                features.data.homepage_slider_opacity,
+>>>>>>> upstream/master
                 images:                 []
             };
+
+            console.log("homepage_slider",homepage_slider);
 
             var tmp_images = features.data.homepage_slider_images;
 
@@ -56,7 +69,9 @@ App.config(function ($stateProvider, $urlRouterProvider) {
                 return (homepage_slider.is_active_for_layout && homepage_slider.is_visible && homepage_slider.images);
             };
 
-            $scope.homepage_slider = homepage_slider;
+            Application.loaded.then(function() {
+                $scope.homepage_slider = homepage_slider;
+            });
 
             $scope.features = features;
 

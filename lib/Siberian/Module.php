@@ -15,6 +15,14 @@ class Siberian_Module {
     public static $menus = array();
 
     /**
+<<<<<<< HEAD
+=======
+     * @var array
+     */
+    public static $editor_menus = array();
+
+    /**
+>>>>>>> upstream/master
      * @param $feature
      * @param $classname
      */
@@ -36,8 +44,15 @@ class Siberian_Module {
     }
 
     /**
+<<<<<<< HEAD
      * @param $feature
      * @param $classname
+=======
+     * @param $module
+     * @param $code
+     * @param $title
+     * @param $link
+>>>>>>> upstream/master
      */
     public static function addMenu($module, $code, $title, $link) {
         if(!isset(self::$menus[$module])) {
@@ -53,8 +68,12 @@ class Siberian_Module {
     }
 
     /**
+<<<<<<< HEAD
      * @param $module
      * @return bool|mixed
+=======
+     * @return array|bool
+>>>>>>> upstream/master
      */
     public static function getMenus() {
         if(!empty(self::$menus)) {
@@ -62,4 +81,36 @@ class Siberian_Module {
         }
         return false;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * @param $module
+     * @param $code
+     * @param $title
+     * @param $link
+     */
+    public static function addEditorMenu($module, $code, $title, $link) {
+        if(!isset(self::$editor_menus[$module])) {
+            self::$editor_menus[$module] = array();
+        }
+
+        if(!isset(self::$editor_menus[$module][$code])) {
+            self::$editor_menus[$module][$code] = array(
+                "title"     => __($title),
+                "link"      => $link,
+            );
+        }
+    }
+
+    /**
+     * @return array|bool
+     */
+    public static function getEditorMenus() {
+        if(!empty(self::$editor_menus)) {
+            return self::$editor_menus;
+        }
+        return false;
+    }
+>>>>>>> upstream/master
 }

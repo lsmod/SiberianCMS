@@ -2,7 +2,17 @@
 "Add a custom text to the footer of your invoices"
 "Invoice options"
 "Offline plans"
+<<<<<<< HEAD
 "Sales configuration"
 "This message will be displayed as a waiting message when your users chose an offline payment method"
 "This message will be displayed as an information message to describe which offline payment method you offer"
+=======
+"Paid at:"
+"Payment Method"
+"Price Excl. Tax"
+"Sales configuration"
+"This message will be displayed as a waiting message when your users chose an offline payment method"
+"This message will be displayed as an information message to describe which offline payment method you offer"
+"Total Excl. Tax"
+>>>>>>> upstream/master
 "VAT check options"

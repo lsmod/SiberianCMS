@@ -1,7 +1,7 @@
 <?php
 
-class Catalog_Model_Product extends Core_Model_Default
-{
+class Catalog_Model_Product extends Core_Model_Default {
+
     protected $_is_cacheable = true;
 
     const DISPLAYED_PER_PAGE = 10;
@@ -14,6 +14,7 @@ class Catalog_Model_Product extends Core_Model_Default
     protected $_specific_import_data = array(
         "mcommerce_id"
     );
+
     protected $_mandatory_columns = array(
         "tax_id",
         "name",
@@ -115,11 +116,19 @@ class Catalog_Model_Product extends Core_Model_Default
                 $menus = $this->findAll(array('value_id' => $option_value->getId(), 'type' => 'menu'));
 
                 foreach($menus as $menu) {
+<<<<<<< HEAD
                     if($menu->getThumbnailUrl())
                         $paths[] = $menu->getThumbnailUrl();
 
                     if($menu->getPictureUrl())
                         $paths[] = $menu->getPictureUrl();
+=======
+                    //if($menu->getThumbnailUrl())
+                        //$paths[] = $menu->getThumbnailUrl();
+
+                    //if($menu->getPictureUrl())
+                        //$paths[] = $menu->getPictureUrl();
+>>>>>>> upstream/master
                 }
             }
 

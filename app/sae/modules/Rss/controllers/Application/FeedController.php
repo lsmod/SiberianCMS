@@ -10,13 +10,23 @@ class Rss_Application_FeedController extends Application_Controller_Default
         "search" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
                 "assets_paths_valueid_#VALUE_ID#"
+=======
+                "assets_paths_valueid_#VALUE_ID#",
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         ),
         "delete" => array(
             "tags" => array(
                 "feature_paths_valueid_#VALUE_ID#",
+<<<<<<< HEAD
                 "assets_paths_valueid_#VALUE_ID#"
+=======
+                "assets_paths_valueid_#VALUE_ID#",
+                "homepage_app_#APP_ID#",
+>>>>>>> upstream/master
             ),
         )
     );
@@ -28,9 +38,34 @@ class Rss_Application_FeedController extends Application_Controller_Default
             $html = '';
 
             try {
-                if(empty($datas['link']) OR !Zend_Uri::check($datas['link'])) throw new Exception($this->_('Please enter a valid url'));
+                if(empty($datas['link']) OR !Zend_Uri::check($datas['link'])) throw new Exception(__('Please enter a valid url'));
 
-                $result = Zend_Feed_Reader::findFeedLinks($datas['link']);
+                try {
+                    $rss_feed = Zend_Feed_Reader::import($datas['link']);
+                } catch(Zend_Feed_Exception $e) {
+                    $rss_feed = null;
+                }
+
+
+                $feeds = array();
+                try {
+                    $result = Zend_Feed_Reader::findFeedLinks($datas['link']);
+
+                    foreach($result as $feed) {
+                        if(
+                            empty($feed['href']) ||
+                            $feed['type'] == "text/html" ||
+                            ($rss_feed && $feed['href'] == $rss_feed->getLink())
+                        ) continue;
+                        $feeds[] = $feed['href'];
+                    }
+
+                    if($rss_feed && !array_search($rss_feed->getFeedLink(), $feeds) && count($feeds) > 0) {
+                        $feeds = array_merge([$rss_feed->getFeedLink()], $feeds);
+                    }
+                } catch(Zend_Feed_Exception $e) {
+                    // Ignore
+                }
 
                 try {
                     $rss_feed = Zend_Feed_Reader::import($datas['link']);
@@ -58,7 +93,7 @@ class Rss_Application_FeedController extends Application_Controller_Default
                     } else {
                         //Aucun flux à cette adresse
                         $html = array(
-                            'message' => $this->_("No RSS feed could be found"),
+                            'message' => __("No RSS feed could be found"),
                             'message_button' => 1,
                             'message_loader' => 1
                         );
@@ -73,10 +108,9 @@ class Rss_Application_FeedController extends Application_Controller_Default
                     $html = array('links' => $feeds, 'id' => $id);
                 }
 
-            }
-            catch(Exception $e) {
+            } catch(Exception $e) {
                 $html = array(
-                    'message' => $this->_("No RSS feed could be found"),
+                    'message' => __("No RSS feed could be found"),
                     'message_button' => 1,
                     'message_loader' => 1
                 );
@@ -95,10 +129,10 @@ class Rss_Application_FeedController extends Application_Controller_Default
             try {
 
                 // Test s'il y a une erreur dans la saisie
-                if(empty($datas['link']) OR !Zend_Uri::check($datas['link'])) throw new Exception($this->_('Please enter a valid url'));
+                if(empty($datas['link']) OR !Zend_Uri::check($datas['link'])) throw new Exception(__('Please enter a valid url'));
 
                 // Test s'il y a un value_id
-                if(empty($datas['value_id'])) throw new Exception($this->_('An error occurred while saving your RSS feed'));
+                if(empty($datas['value_id'])) throw new Exception(__('An error occurred while saving your RSS feed'));
 
                 if(!isset($datas['picture'])) {
                     $datas['picture'] = 0;
@@ -123,7 +157,7 @@ class Rss_Application_FeedController extends Application_Controller_Default
                     // Si le flux existe mais qu'il n'appartient pas à cette option_value
                     if($feed->getId() AND $feed->getValueId() != $option_value->getId()) {
                         // Envoi l'erreur
-                        throw new Exception($this->_('An error occurred while saving your RSS feed'));
+                        throw new Exception(__('An error occurred while saving your RSS feed'));
                     }
                     $isNew = !$feed->getId();
                     $last_position = $feed->getPosition();
@@ -136,9 +170,14 @@ class Rss_Application_FeedController extends Application_Controller_Default
 
                 $feed->setData($datas)->save();
 
+                /** Update touch date, then never expires (until next touch) */
+                $this->getCurrentOptionValue()
+                    ->touch()
+                    ->expires(-1);
+
                 $html = array(
                     'success' => 1,
-                    'success_message' => $this->_('RSS feed successfully saved'),
+                    'success_message' => __('RSS feed successfully saved'),
                     'message_timeout' => 2,
                     'message_button' => 0,
                     'message_loader' => 0
@@ -173,7 +212,7 @@ class Rss_Application_FeedController extends Application_Controller_Default
 
                 // Récupère les positions
                 $positions = $this->getRequest()->getParam('row');
-                if(empty($positions)) throw new Exception($this->_("An error occurred while saving. Please try again later."));
+                if(empty($positions)) throw new Exception(__("An error occurred while saving. Please try again later."));
 
                 // Supprime les positions en trop, au cas où...
                 foreach($positions as $key => $position) {
@@ -186,6 +225,11 @@ class Rss_Application_FeedController extends Application_Controller_Default
 
                 // Renvoie OK
                 $html = array('success' => 1);
+
+                /** Update touch date, then never expires (until next touch) */
+                $this->getCurrentOptionValue()
+                    ->touch()
+                    ->expires(-1);
 
             }
             catch(Exception $e) {
@@ -209,6 +253,11 @@ class Rss_Application_FeedController extends Application_Controller_Default
             // Met à jour les positions des flux
             $rss = new Rss_Model_Feed();
             $rss->find($id)->delete();
+
+            /** Update touch date, then never expires (until next touch) */
+            $this->getCurrentOptionValue()
+                ->touch()
+                ->expires(-1);
 
             // Renvoie OK
             $html = array('success' => 1);

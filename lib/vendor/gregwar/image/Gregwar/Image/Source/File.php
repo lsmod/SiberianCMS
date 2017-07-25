@@ -5,7 +5,11 @@ namespace Gregwar\Image\Source;
 use Gregwar\Image\Image;
 
 /**
+<<<<<<< HEAD
  * Open an image from a file
+=======
+ * Open an image from a file.
+>>>>>>> upstream/master
  */
 class File extends Source
 {
@@ -47,7 +51,11 @@ class File extends Source
         }
 
         $parts = explode('.', $this->file);
+<<<<<<< HEAD
         $ext = strtolower($parts[count($parts)-1]);
+=======
+        $ext = strtolower($parts[count($parts) - 1]);
+>>>>>>> upstream/master
 
         if (isset(Image::$types[$ext])) {
             return Image::$types[$ext];

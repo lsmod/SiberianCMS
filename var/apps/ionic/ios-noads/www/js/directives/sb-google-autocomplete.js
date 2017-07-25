@@ -1,16 +1,31 @@
-App.directive('sbGoogleAutocomplete', function(GoogleMaps, $timeout) {
+angular.module("starter").directive('sbGoogleAutocomplete', function(GoogleMaps, $timeout) {
     return {
         scope: {
-            location: '=',
-            address:'=',
-            onAddressChange:'&'
+            location: '=?',
+            address:'=?',
+            place: '=?',
+            onAddressChange:'&?'
         },
         require: '?ngModel', // get a hold of NgModelController
         link: function(scope, element, attrs, ngModel) {
 
             var options = {
+<<<<<<< HEAD
                 types: [],
+=======
+                types: []
+>>>>>>> upstream/master
             };
+
+            element.on("keydown", function(e) {
+                if(
+                    e.which == 13 &&
+                        _.get(
+                            document.getElementsByClassName("pac-container"),
+                            "[0].style.display"
+                        ) === ""
+                ) e.preventDefault();
+            });
 
             GoogleMaps.addCallback(function() {
                 scope.googleAutocomplete = new google.maps.places.Autocomplete(element[0], options);
@@ -18,6 +33,7 @@ App.directive('sbGoogleAutocomplete', function(GoogleMaps, $timeout) {
                 google.maps.event.addListener(scope.googleAutocomplete, 'place_changed', function(data) {
 
                     var place = scope.googleAutocomplete.getPlace();
+                    scope.place = place;
 
                     if(place.geometry) {
                         if(!angular.isObject(scope.location))
@@ -35,7 +51,7 @@ App.directive('sbGoogleAutocomplete', function(GoogleMaps, $timeout) {
 
                     $timeout(function() {
                         scope.location.address = val;
-                        scope.onAddressChange();
+                        scope.onAddressChange(scope);
                     });
 
                 });

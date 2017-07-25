@@ -47,12 +47,23 @@ class Core_Model_Lib_Facebook extends Core_Model_Default {
         $app_id         = Core_Model_Lib_Facebook::getAppId();
         $app_secret     = Core_Model_Lib_Facebook::getSecretKey();
 
+<<<<<<< HEAD
         $url = 'https://graph.facebook.com/v2.7/oauth/access_token';
         $url .= '?grant_type=client_credentials';
         $url .= "&client_id=$app_id";
         $url .= "&client_secret=$app_secret";
 
         $token_response = file_get_contents($url);
+=======
+        $params = array(
+            "grant_type"        => "client_credentials",
+            "client_id"         => $app_id,
+            "client_secret"     => $app_secret
+        );
+
+        $token_response = Siberian_Request::get("https://graph.facebook.com/v2.7/oauth/access_token", $params);
+
+>>>>>>> upstream/master
         if(strpos($token_response, "access_token=") === false) {
             $result = Siberian_Json::decode($token_response);
             $access_token = $result["access_token"];

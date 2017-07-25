@@ -452,4 +452,26 @@ try {
 
 
 
+<<<<<<< HEAD
+=======
+# run in 4.12.2
+$this->query("
+UPDATE application 
+SET privacy_policy_title = (
+    SELECT tabbar_name 
+	FROM application_option_value 
+	INNER JOIN application_option 
+    	ON (application_option.option_id = application_option_value.option_id)
+    WHERE application_option_value.app_id = application.app_id
+    AND application_option.code = 'privacy_policy'
+    LIMIT 1
+)
+WHERE ( 
+    privacy_policy_title IS NULL 
+    OR 
+    privacy_policy_title = ''
+)");
+
+
+>>>>>>> upstream/master
 

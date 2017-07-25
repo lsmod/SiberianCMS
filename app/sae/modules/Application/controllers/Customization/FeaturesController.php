@@ -64,14 +64,21 @@ class Application_Customization_FeaturesController extends Application_Controlle
         );
 
         foreach($features as $feature) {
-            $feature_model = $feature->getModel();
-            $feature_model = new $feature_model();
+            try{
+                $feature_model = $feature->getModel();
+                if(!class_exists($feature_model)) {
+                    throw new Exception("Class doesn't exists : ".$feature_model);
+                }
+                $feature_model = new $feature_model();
 
-            if($feature_states = $feature_model->getInappStates($feature->getValueId())) {
-                $states[] = array(
-                    __($feature->getTabbarname()),
-                    $feature_states
-                );
+                if($feature_states = $feature_model->getInappStates($feature->getValueId())) {
+                    $states[] = array(
+                        __($feature->getTabbarname()),
+                        $feature_states
+                    );
+                }
+            } catch(Exception $e) {
+                log_info($e->getMessage());
             }
         }
 
@@ -523,7 +530,7 @@ class Application_Customization_FeaturesController extends Application_Controlle
 
                 // Test les données
                 if(empty($datas['option_value_id']) OR empty($datas['tabbar_name'])) {
-                    throw new Exception(__('An error occurred while saving your page name.'));
+                    throw new Siberian_Exception(__('An error occurred while saving your page name.'));
                 }
 
                 // Charge l'option_value
@@ -533,8 +540,9 @@ class Application_Customization_FeaturesController extends Application_Controlle
 
                 // Test s'il n'y a pas embrouille entre l'id de l'application dans l'option_value et l'id de l'application en session
                 if(!$option_value->getId()) {
-                    throw new Exception(__('An error occurred while saving your page name.'));
+                    throw new Siberian_Exception(__('An error occurred while saving your page name.'));
                 }
+
 
                 $option_folder = new Application_Model_Option();
                 $option_folder->find(array('code' => 'folder'));
@@ -546,6 +554,13 @@ class Application_Customization_FeaturesController extends Application_Controlle
                     $category = new Folder_Model_Category();
                     $category->find($folder->getRootCategoryId(), 'category_id');
                     $category->setTitle($datas['tabbar_name'])->save();
+                }
+
+                /** Privacy policy special case */
+                $current_option = new Application_Model_Option();
+                $current_option->find($option_value->getOptionId());
+                if($current_option->getCode() === "privacy_policy") {
+                    $this->getApplication()->setPrivacyPolicyTitle($datas['tabbar_name'])->save();
                 }
 
                 if(in_array($option_value->getId(), array('customer_account', 'more_items'))) {

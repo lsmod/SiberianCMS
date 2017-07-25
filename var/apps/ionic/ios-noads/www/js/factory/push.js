@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 App.factory('Push', function($cordovaGeolocation, $cordovaLocalNotification, $cordovaPush, $log, $sbhttp, $rootScope, $translate, $window, Application, httpCache, Url, PUSH_EVENTS) {
 
     /*
@@ -384,111 +385,149 @@ App.factory('Push', function($cordovaGeolocation, $cordovaLocalNotification, $co
             return dist;
         }
 
-    };
+=======
+/*global
+    App, angular, DEVICE_TYPE
+ */
 
-    /*
-     * PUBLIC
-     */
+/**
+ * Push
+ *
+ * @author Xtraball SAS
+ */
+angular.module('starter').factory('Push', function ($pwaRequest, $session, SB) {
     var factory = {
-        value_id: null,
-        device_uid: null,
-        pushs: 0,
-        displayed_per_page: null
+        value_id                : null,
+        device_type             : DEVICE_TYPE,
+        device_token            : null,
+        unread_count            : 0,
+        extendedOptions         : {}
+>>>>>>> upstream/master
     };
 
-    Object.defineProperty($rootScope, "device_uid", {
-        get: function() {
-            return factory.device_uid;
+    /**
+     *
+     * @param valueId
+     */
+    factory.setValueId = function (valueId) {
+        factory.value_id = valueId;
+    };
+
+    /**
+     *
+     * @param options
+     */
+    factory.setExtendedOptions = function (options) {
+        factory.extendedOptions = options;
+    };
+
+    /**
+     * Pre-Fetch feature.
+     *
+     * @param page
+     */
+    factory.preFetch = function (page) {
+        factory.findAll();
+    };
+
+    factory.registerAndroidDevice = function (params) {
+        $pwaRequest.post('/push/android/registerdevice', {
+            data    : angular.extend(params, {
+                device_uid: $session.getDeviceUid()
+            }),
+            cache   : false
+        });
+    };
+
+    factory.registerIosDevice = function (params) {
+        $pwaRequest.post('/push/iphone/registerdevice', {
+            data : angular.extend(params, {
+                device_uid: $session.getDeviceUid()
+            }),
+            cache : false
+        });
+    };
+
+    factory.findAll = function (offset, refresh) {
+        if (!this.value_id) {
+            $pwaRequest.reject('[Factory::Push.findAll] missing value_id');
         }
-    }); // symbolic link to bypass dependency injection for Application service
 
-    factory.setSenderID = function(senderID) {
-        __self.init_data.android.senderID = senderID;
+        return $pwaRequest.get('push/mobile_list/findall', angular.extend({
+            urlParams: {
+                value_id    : this.value_id,
+                device_uid  : $session.getDeviceUid(),
+                offset      : offset
+            },
+            refresh: refresh
+        }, factory.extendedOptions));
     };
 
-    factory.setIconColor = function(iconColor) {
-        __self.init_data.android.iconColor = iconColor;
-    };
-
-    factory.register = function() {
-        __self.register();
-    };
-
-    factory.startBackgroundGeolocation = function() {
-        __self.startBackgroundGeolocation();
-    };
-
-    factory.findAll = function(offset) {
-
-        if(!this.value_id) return;
-
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("push/mobile_list/findall", {value_id: this.value_id, device_uid: this.device_uid, offset:offset}),
-            cache: !$rootScope.isOverview,
-            responseType:'json'
-        }).success(function(data) {
-
-            httpCache.remove(Url.get("push/mobile/count", {device_uid: factory.device_uid}));
-
-            if(data.displayed_per_page) {
-                factory.displayed_per_page = data.displayed_per_page;
+    /**
+     * updateUnreadCount
+     */
+    factory.updateUnreadCount = function () {
+        return $pwaRequest.get('push/mobile/count', {
+            urlParams: {
+                device_uid: $session.getDeviceUid()
             }
-
         });
     };
 
-    factory.getPushs = function(device_uid) {
-
-        $sbhttp({
-            method: 'GET',
-            url: Url.get("push/mobile/count", {device_uid: device_uid}),
-            cache: !$rootScope.isOverview,
-            responseType: 'json'
-        }).success(function (data) {
-            factory.pushs = data.count;
-            $rootScope.$broadcast(PUSH_EVENTS.unreadPushs);
+    factory.getInAppMessages = function () {
+        return $pwaRequest.get('push/mobile/inapp', {
+            urlParams: {
+                device_uid: $session.getDeviceUid()
+            }
         });
     };
 
-    factory.getInAppMessages = function(device_uid) {
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("push/mobile/inapp", {device_uid: device_uid}),
-            cache: !$rootScope.isOverview,
-            responseType: 'json'
+    factory.getLastMessages = function () {
+        return $pwaRequest.get('push/mobile/lastmessages', {
+            urlParams: {
+                device_uid: $session.getDeviceUid()
+            }
         });
     };
 
-    factory.getLastMessages = function() {
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("push/mobile/lastmessages", {device_uid: factory.device_uid}),
-            cache: false,
-            responseType: 'json',
-            timeout: 10000
+    /**
+     * Mark in-app message as read.
+     *
+     */
+    factory.markInAppAsRead = function () {
+        return $pwaRequest.get('push/mobile/readinapp', {
+            urlParams: {
+                device_uid  : $session.getDeviceUid(),
+                device_type : factory.device_type
+            },
+            cache: false
         });
     };
 
-    factory.markInAppAsRead = function() {
-        var device_type = ionic.Platform.isIOS() ? 1 : 2;
+    /**
+     * Mark push message as read.
+     *
+     * @param messageId
+     */
+    factory.markAsDisplayed = function (messageId) {
+        var url = '';
+        switch (factory.device_type) {
+            case SB.DEVICE.TYPE_ANDROID:
+                url = 'push/android/markdisplayed';
+                break;
+            case SB.DEVICE.TYPE_IOS:
+                url = 'push/iphone/markdisplayed';
+                break;
+            default:
+                return $pwaRequest.reject();
+        }
 
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("push/mobile/readinapp", {device_uid: factory.device_uid, device_type: device_type}),
-            cache: false,
-            responseType: 'json'
-        });
-    };
-
-    factory.markAsDisplayed = function(message_id) {
-        var device_type = ionic.Platform.isIOS() ? "iphone" : "android";
-
-        return $sbhttp({
-            method: 'GET',
-            url: Url.get("push/" + device_type + "/markdisplayed", {device_uid: factory.device_uid, message_id: message_id}),
-            cache: false,
-            responseType: 'json'
+        return $pwaRequest.get(url, {
+            data: {
+                device_uid: $session.getDeviceUid(),
+                message_id: messageId
+            },
+            cache: false
         });
     };
 

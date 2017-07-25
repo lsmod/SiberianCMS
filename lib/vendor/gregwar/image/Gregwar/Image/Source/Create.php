@@ -3,7 +3,11 @@
 namespace Gregwar\Image\Source;
 
 /**
+<<<<<<< HEAD
  * Creates a new image from scratch
+=======
+ * Creates a new image from scratch.
+>>>>>>> upstream/master
  */
 class Create extends Source
 {

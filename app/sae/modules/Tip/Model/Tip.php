@@ -27,8 +27,24 @@ class Tip_Model_Tip extends Core_Model_Default {
         return $in_app_states;
     }
 
-    public function getFeaturePaths($option_value) {
+    /**
+     * @param $option_value
+     * @return bool
+     */
+    public function getEmbedPayload($option_value) {
 
+        $currency = Core_Model_Language::getCurrentCurrency();
+        $payload = array(
+            "currency_symbol"   => Core_Model_Language::getCurrentCurrency()->getSymbol(),
+            "page_title"        => $option_value->getTabbarName(),
+            "format"            => $currency->toCurrency(1,array("locale" => $currency->getLocale()))
+        );
+
+        return $payload;
+
+    }
+
+    public function getFeaturePaths($option_value) {
         if(!$this->isCacheable()) return array();
 
         $value_id = $option_value->getId();
@@ -42,6 +58,7 @@ class Tip_Model_Tip extends Core_Model_Default {
                 'value_id' => $option_value->getId()
             );
             $paths[] = $option_value->getPath("findall", $params, false);
+<<<<<<< HEAD
 
             $this->cache->save($paths, $cache_id, array(
                 "feature_paths",
@@ -49,6 +66,15 @@ class Tip_Model_Tip extends Core_Model_Default {
             ));
         }
 
+=======
+
+            $this->cache->save($paths, $cache_id, array(
+                "feature_paths",
+                "feature_paths_valueid_{$value_id}"
+            ));
+        }
+
+>>>>>>> upstream/master
         return $paths;
     }
 

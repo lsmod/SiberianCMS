@@ -2,7 +2,11 @@
     App, ionic, angular
  */
 
+<<<<<<< HEAD
 App.directive("sbAClick", function($filter, $rootScope, $timeout, $window, $state, LinkService) {
+=======
+angular.module("starter").directive("sbAClick", function($filter, $rootScope, $timeout, $window, $state, LinkService) {
+>>>>>>> upstream/master
     return {
         restrict: 'A',
         scope: {

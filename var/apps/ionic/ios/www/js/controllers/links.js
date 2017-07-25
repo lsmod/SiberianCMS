@@ -1,5 +1,8 @@
-App.config(function($stateProvider) {
+/*global
+ App, angular, BASE_PATH, IMAGE_URL
+ */
 
+<<<<<<< HEAD
     $stateProvider.state('links-view', {
         url: BASE_PATH+"/weblink/mobile_multi/index/value_id/:value_id",
         controller: 'LinksViewController',
@@ -8,43 +11,69 @@ App.config(function($stateProvider) {
     });
 
 }).controller('LinksViewController', function($scope, $stateParams, $rootScope, $timeout, $window, Links, LinkService) {
+=======
+angular.module("starter").controller("LinksViewController", function($scope, $stateParams, $rootScope, $timeout, $window, Links, LinkService) {
+>>>>>>> upstream/master
 
-    $scope.$on("connectionStateChange", function(event, args) {
-        if(args.isOnline == true) {
-            $scope.loadContent();
-        }
+    angular.extend($scope, {
+        is_loading  : true,
+        value_id    : $stateParams.value_id,
+        weblink     : {},
+        card_design : false
     });
 
-    $scope.weblink = {};
-    $scope.is_loading = true;
-    $scope.value_id = Links.value_id = $stateParams.value_id;
+    Links.setValueId($stateParams.value_id);
 
     $scope.loadContent = function() {
 
-        Links.find().success(function(data) {
+        Links
+            .find()
+            .then(function(data) {
 
-            $scope.weblink = data.weblink;
-            if(!angular.isArray($scope.weblink.links)) {
-                $scope.weblink.links = new Array();
-            }
+                $scope.weblink = data.weblink;
 
-            $scope.page_title = data.page_title;
+                if(!angular.isArray($scope.weblink.links)) {
+                    $scope.weblink.links = [];
+                }
 
-        }).finally(function() {
-            $scope.is_loading = false;
-        });
+                $scope.page_title = data.page_title;
+
+            }).then(function() {
+
+                $scope.is_loading = false;
+
+            });
 
     };
             var options = {
             };
 
+<<<<<<< HEAD
     $scope.openLink = function(url, hide_navbar, use_external_app) {
         LinkService.openLink(url, {
             "hide_navbar" : (hide_navbar ? true : false),
             "use_external_app" : (use_external_app ? true : false)
         });
+=======
+    /**
+     *
+     * @param url
+     * @param hide_navbar
+     * @param use_external_app
+     */
+    $scope.openLink = function(url, hide_navbar, use_external_app) {
+
+        LinkService.openLink(url, {
+            "hide_navbar"       : hide_navbar,
+            "use_external_app"  : use_external_app
+        });
+
+>>>>>>> upstream/master
     };
 
+    /**
+     * @todo check behavior ???
+     */
     if($rootScope.isOverview) {
 
         $window.prepareDummy = function() {

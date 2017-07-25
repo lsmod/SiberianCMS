@@ -96,6 +96,7 @@ class Front_Mobile_HomeController extends Application_Controller_Mobile_Default 
                     'position'          => $option_value->getPosition()
                 );
             }
+<<<<<<< HEAD
 
             $option = new Application_Model_Option();
             $option->findTabbarMore();
@@ -110,6 +111,22 @@ class Front_Mobile_HomeController extends Application_Controller_Mobile_Default 
                     $more_color = $color;
                 }
 
+=======
+
+            $option = new Application_Model_Option();
+            $option->findTabbarMore();
+
+            $more_colorizable = true;
+            if ($this->getApplication()->getMoreIconId()) {
+                $library = new Media_Model_Library_Image();
+                $icon = $library->find($this->getApplication()->getMoreIconId());
+                if (!$icon->getCanBeColorized()) {
+                    $more_color = null;
+                } else {
+                    $more_color = $color;
+                }
+
+>>>>>>> upstream/master
                 $more_colorizable = $icon->getCanBeColorized();
             } else {
                 $more_color = $color;
@@ -195,6 +212,7 @@ class Front_Mobile_HomeController extends Application_Controller_Mobile_Default 
                 $homepage_slider_images[] = $slider_image->getLink();
             }
             $data['homepage_slider_images'] = $homepage_slider_images;
+<<<<<<< HEAD
 
             $this->cache->save($data, $cache_id, array(
                 "front_mobile_home_findall",
@@ -208,6 +226,25 @@ class Front_Mobile_HomeController extends Application_Controller_Mobile_Default 
             $data["x-cache"] = "MISS";
         } else {
 
+=======
+
+            foreach($application->getOptions() as $opt) {
+              $data['layouts'][$opt->getValueId()] = $opt->getLayoutId();
+            }
+
+            $this->cache->save($data, $cache_id, array(
+                "front_mobile_home_findall",
+                "app_".$application->getId(),
+                "homepage_app_".$application->getId(),
+                "css_app_".$app_id,
+                "mobile_translation",
+                "mobile_translation_locale_{$current_language}"
+            ));
+
+            $data["x-cache"] = "MISS";
+        } else {
+
+>>>>>>> upstream/master
             $data = $result;
 
             $data["x-cache"] = "HIT";

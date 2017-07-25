@@ -38,6 +38,28 @@ class Sourcecode_Model_Sourcecode extends Core_Model_Default {
         return $in_app_states;
     }
 
+    /**
+     * @param $option_value
+     * @return bool
+     */
+    public function getEmbedPayload($option_value) {
+
+        $payload = false;
+
+        if($this->getId()) {
+            $payload = array(
+                "sourcecode" => array(
+                    "id"   => $this->getId(),
+                    "code" => $this->getHtmlFileCode()
+                ),
+                "page_title" => $option_value->getTabbarName()
+            );
+        }
+
+        return $payload;
+
+    }
+
     public function getHtmlFilePath($full_path = false) {
 
         if(!file_exists(Core_Model_Directory::getCacheDirectory(true).'/'.$this->_getFilename())) {
@@ -120,7 +142,6 @@ var inAppLinks = document.querySelectorAll("a[data-state]");
     }
 
     public function getFeaturePaths($option_value) {
-
         if(!$this->isCacheable()) return array();
 
 
@@ -148,6 +169,7 @@ var inAppLinks = document.querySelectorAll("a[data-state]");
         $value_id = $option_value->getId();
         $cache_id = "assets_paths_valueid_{$value_id}";
         if(!$paths = $this->cache->load($cache_id)) {
+<<<<<<< HEAD
 
             $paths = array();
 
@@ -155,6 +177,15 @@ var inAppLinks = document.querySelectorAll("a[data-state]");
             $regex_url = "/((?:http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/[^\s\"]*)\.(?:png|gif|jpeg|jpg|svg|css|js)+)+/";
             preg_match_all($regex_url, $this->getHtmlFileCode(), $matches);
 
+=======
+
+            $paths = array();
+
+            $matches = array();
+            $regex_url = "/((?:http|https)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(?:\/[^\s\"]*)\.(?:png|gif|jpeg|jpg|svg|css|js)+)+/";
+            preg_match_all($regex_url, $this->getHtmlFileCode(), $matches);
+
+>>>>>>> upstream/master
             $matches = call_user_func_array('array_merge', $matches);
 
             if($matches && count($matches) > 1) {

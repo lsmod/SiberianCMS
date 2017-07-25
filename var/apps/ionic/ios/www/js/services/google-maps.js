@@ -1,5 +1,7 @@
-/* global google, App, angular */
-App.service('GoogleMaps', function (_, $cordovaGeolocation, $location, $q, $rootScope, $translate, $window, Application) {
+/*global
+    google, App, angular
+*/
+angular.module("starter").service('GoogleMaps', function ($cordovaGeolocation, $location, $q, $rootScope, $translate, $window, Application) {
     "use strict";
 
     var __self = {
@@ -208,7 +210,7 @@ App.service('GoogleMaps', function (_, $cordovaGeolocation, $location, $q, $root
         isLoaded: function() {
             return __self.is_loaded;
         },
-        addMarker: function (/*map, */marker, index) {
+        addMarker: function (marker, index) {
 
             var latlng = new google.maps.LatLng(marker.latitude, marker.longitude);
 
@@ -233,14 +235,24 @@ App.service('GoogleMaps', function (_, $cordovaGeolocation, $location, $q, $root
 
             if (marker.title) {
 
-                var infoWindowContent = '<div><p style="color:black;">';
+                var marker_id = 'info-marker-' + index;
+
+                var infoWindowContent = '<div id="' + marker_id + '"><p style="color:black;">';
 
                 if (marker.link) {
                     infoWindowContent += '<a href="' + marker.link + '">';
                 }
+
                 infoWindowContent += marker.title;
                 if (marker.link) {
                     infoWindowContent += '</a>';
+                }
+
+                var markerHasAction = _.isObject(marker.action) && _.isString(marker.action.label) && _.isFunction(marker.action.onclick);
+
+                if (markerHasAction) {
+                    var id = "map_marker_infowindow_action_"+Math.ceil((+new Date())*Math.random());
+                    infoWindowContent += '<div style="margin-top: 15px; "><button id="'+id+'" class="button button-custom">'+marker.action.label+'</button></div>';
                 }
 
                 infoWindowContent += '</p></div>';
@@ -249,8 +261,19 @@ App.service('GoogleMaps', function (_, $cordovaGeolocation, $location, $q, $root
                     content: infoWindowContent
                 });
 
+                if(markerHasAction) {
+                    google.maps.event.addListener(infoWindows, 'domready', function() {
+                        document.getElementById(id).addEventListener("click", marker.action.onclick);
+                    });
+                }
+
                 google.maps.event.addListener(mapMarker, 'click', function () {
                     infoWindows.open(service.map, mapMarker);
+                    if(marker.hasOwnProperty("onClick") && (typeof marker.onClick === "function")) {
+                        google.maps.event.addDomListener(document.getElementById(marker_id), "click", function(event) {
+                            marker.onClick();
+                        });
+                    }
                 });
 
             }

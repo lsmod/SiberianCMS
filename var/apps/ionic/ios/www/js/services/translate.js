@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 App.service('$translate', function($sbhttp, Url) {
+=======
+/*global
+ angular
+ */
+angular.module("starter").service('$translate', function() {
+
+>>>>>>> upstream/master
     var service = {};
 
     service.translations = [];
@@ -7,6 +15,7 @@ App.service('$translate', function($sbhttp, Url) {
         return angular.isDefined(service.translations[text]) ? service.translations[text] : text;
     };
 
+<<<<<<< HEAD
     /**
      * @deprecated
      * @param is_retry
@@ -27,5 +36,8 @@ App.service('$translate', function($sbhttp, Url) {
         });
     };
 
+=======
+>>>>>>> upstream/master
     return service;
+
 });
